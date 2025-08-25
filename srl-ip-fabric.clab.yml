@@ -16,29 +16,29 @@ topology:
       image: ghcr.io/srl-labs/network-multitool
   nodes:
     d5:
-      #startup-config: configs/d5-startup.cfg
+      startup-config: configs/d5-config.json
       type: ixr-d5
       mgmt-ipv4: 172.20.30.2
       mgmt-ipv6: 2001:172:20:30::2
     x3b:
-      #startup-config: configs/x3b-startup.cfg
+      startup-config: configs/x3b-config.json
       type: ixr-x3b
       mgmt-ipv4: 172.20.30.3
       mgmt-ipv6: 2001:172:20:30::3
       license: srl257-license.txt
     spine:
-      #startup-config: configs/spine-startup.cfg
+      startup-config: configs/spine-config.json
       type: ixr-x3b
       mgmt-ipv4: 172.20.30.4
       mgmt-ipv6: 2001:172:20:30::4
       license: srl257-license.txt
     client1:
-      #startup-config: configs/client1-startup.cfg
+      startup-config: configs/client1-config.json
       type: ixr-d2l
       mgmt-ipv4: 172.20.30.13
       mgmt-ipv6: 2001:172:20:30::13
     client2:
-      #startup-config: configs/client2-startup.cfg
+      startup-config: configs/client2-config.json
       type: ixr-d2l
       mgmt-ipv4: 172.20.30.14
       mgmt-ipv6: 2001:172:20:30::14
