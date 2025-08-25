@@ -1,0 +1,49 @@
+name: srl-ip-fabric
+
+mgmt:
+  network: srl-ipf-mgmt
+  ipv4-subnet: 172.20.30.0/24
+  ipv6-subnet: 2001:172:20:30::/64
+
+prefix: ""
+topology:
+  defaults:
+    kind: nokia_srlinux
+  kinds:
+    nokia_srlinux:
+      image: ghcr.io/nokia/srlinux:25.7.1
+    linux:
+      image: ghcr.io/srl-labs/network-multitool
+  nodes:
+    d5:
+      #startup-config: configs/d5-startup.cfg
+      type: ixr-d5
+      mgmt-ipv4: 172.20.30.2
+      mgmt-ipv6: 2001:172:20:30::2
+    x3b:
+      #startup-config: configs/x3b-startup.cfg
+      type: ixr-x3b
+      mgmt-ipv4: 172.20.30.3
+      mgmt-ipv6: 2001:172:20:30::3
+      license: srl257-license.txt
+    spine:
+      #startup-config: configs/spine-startup.cfg
+      type: ixr-x3b
+      mgmt-ipv4: 172.20.30.4
+      mgmt-ipv6: 2001:172:20:30::4
+      license: srl257-license.txt
+    client1:
+      #startup-config: configs/client1-startup.cfg
+      type: ixr-d2l
+      mgmt-ipv4: 172.20.30.13
+      mgmt-ipv6: 2001:172:20:30::13
+    client2:
+      #startup-config: configs/client2-startup.cfg
+      type: ixr-d2l
+      mgmt-ipv4: 172.20.30.14
+      mgmt-ipv6: 2001:172:20:30::14
+  links:
+    - endpoints: ["d5:e1-1","spine:e1-1"]
+    - endpoints: ["x3b:e1-2","spine:e1-2"]
+    - endpoints: ["client1:e1-49","d5:e1-10-1"]
+    - endpoints: ["client2:e1-49","x3b:e1-10-1"]
