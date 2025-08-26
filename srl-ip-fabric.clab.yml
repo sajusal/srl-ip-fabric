@@ -22,16 +22,16 @@ topology:
       mgmt-ipv6: 2001:172:20:30::2
     x3b:
       startup-config: configs/x3b-config.json
-      type: ixr-x3b
+      type: ixr-d5
       mgmt-ipv4: 172.20.30.3
       mgmt-ipv6: 2001:172:20:30::3
-      license: srl257-license.txt
+      #license: srl257-license.txt
     spine:
       startup-config: configs/spine-config.json
-      type: ixr-x3b
+      type: ixr-d5
       mgmt-ipv4: 172.20.30.4
       mgmt-ipv6: 2001:172:20:30::4
-      license: srl257-license.txt
+      #license: srl257-license.txt
     client1:
       startup-config: configs/client1-config.json
       type: ixr-d2l
