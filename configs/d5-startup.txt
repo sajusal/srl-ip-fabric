@@ -1,0 +1,138 @@
+set / interface ethernet-1/1 description To-spine
+set / interface ethernet-1/1 admin-state enable
+set / interface ethernet-1/1 mtu 9216
+set / interface ethernet-1/1 vlan-tagging true
+set / interface ethernet-1/1 subinterface 1 ipv4 admin-state enable
+set / interface ethernet-1/1 subinterface 1 ipv6 admin-state enable
+set / interface ethernet-1/1 subinterface 1 ipv6 router-advertisement router-role admin-state enable
+set / interface ethernet-1/1 subinterface 1 vlan encap single-tagged vlan-id 1
+set / interface ethernet-1/1 subinterface 2 ipv4 admin-state enable
+set / interface ethernet-1/1 subinterface 2 ipv6 admin-state enable
+set / interface ethernet-1/1 subinterface 2 ipv6 router-advertisement router-role admin-state enable
+set / interface ethernet-1/1 subinterface 2 vlan encap single-tagged vlan-id 2
+set / interface ethernet-1/10 admin-state enable
+set / interface ethernet-1/10 breakout-mode num-breakout-ports 4
+set / interface ethernet-1/10 breakout-mode breakout-port-speed 100G
+set / interface ethernet-1/10/1 admin-state enable
+set / interface ethernet-1/10/1 vlan-tagging true
+set / interface ethernet-1/10/1 ethernet storm-control units kbps
+set / interface ethernet-1/10/1 ethernet storm-control broadcast-rate 1000
+set / interface ethernet-1/10/1 ethernet storm-control multicast-rate 1000
+set / interface ethernet-1/10/1 ethernet storm-control unknown-unicast-rate 1000
+set / interface ethernet-1/10/1 ethernet storm-control rising-threshold-action trigger-event
+set / interface ethernet-1/10/1 subinterface 1 type bridged
+set / interface ethernet-1/10/1 subinterface 1 vlan encap single-tagged vlan-id 1
+set / interface ethernet-1/10/1 subinterface 2 type bridged
+set / interface ethernet-1/10/1 subinterface 2 vlan encap single-tagged vlan-id 2
+set / interface ethernet-1/10/1 subinterface 162 type bridged
+set / interface ethernet-1/10/1 subinterface 162 admin-state enable
+set / interface ethernet-1/10/1 subinterface 162 vlan encap single-tagged vlan-id 162
+set / interface ethernet-1/10/1 sflow admin-state enable
+set / interface irb0 admin-state enable
+set / interface irb0 subinterface 1 ipv4 admin-state enable
+set / interface irb0 subinterface 1 ipv4 address 10.148.33.1/25
+set / interface irb0 subinterface 1 ipv4 address 10.148.252.1/23
+set / interface irb0 subinterface 2 ipv4 admin-state enable
+set / interface irb0 subinterface 2 ipv4 address 10.148.33.129/25
+set / interface irb0 subinterface 162 ipv4 admin-state enable
+set / interface irb0 subinterface 162 ipv4 address 10.148.145.1/24
+set / interface irb0 subinterface 162 ipv4 dhcp-relay admin-state enable
+set / interface irb0 subinterface 162 ipv4 dhcp-relay network-instance blue
+set / interface irb0 subinterface 162 ipv4 dhcp-relay server [ 10.255.0.67 ]
+set / interface lo1 admin-state enable
+set / interface lo1 subinterface 0 ipv4 admin-state enable
+set / interface lo1 subinterface 0 ipv4 address 10.148.32.150/32
+set / interface system0 subinterface 0 ipv4 admin-state enable
+set / interface system0 subinterface 0 ipv4 address 10.148.32.12/32
+set / system management openconfig admin-state enable
+set / system control-plane-traffic input acl acl-filter cpm type ipv4
+set / system control-plane-traffic input acl acl-filter cpm type ipv6
+set / system configuration max-checkpoints 200
+set / system configuration idle-timeout 1200
+set / system configuration auto-checkpoint true
+set / system configuration auto-save true
+set / system configuration role super-user-local rule / action write
+set / system lldp admin-state enable
+set / system name host-name vat-sw-abc21
+set / system grpc-server mgmt admin-state enable
+set / system grpc-server mgmt rate-limit 65000
+set / system grpc-server mgmt tls-profile clab-profile
+set / system grpc-server mgmt network-instance mgmt
+set / system grpc-server mgmt port 50051
+set / system grpc-server mgmt trace-options [ request response common ]
+set / system grpc-server mgmt services [ gnmi gnoi gnsi gribi p4rt ]
+set / system grpc-server mgmt unix-socket admin-state enable
+set / system ssh-server mgmt admin-state enable
+set / system ssh-server mgmt network-instance mgmt
+set / system ssh-server mgmt rate-limit 5
+set / system ssh-server mgmt-netconf admin-state enable
+set / system ssh-server mgmt-netconf network-instance mgmt
+set / system ssh-server mgmt-netconf port 830
+set / system ssh-server mgmt-netconf disable-shell true
+set / system dns network-instance mgmt
+set / system dns server-list [ 10.255.255.254 8.8.8.8 8.8.4.4 ]
+set / system ntp server 216.239.35.0 network-instance mgmt
+set / system clock timezone Africa/Accra
+set / system sflow admin-state enable
+set / system sflow collector 1 collector-address 10.148.131.44
+set / system sflow collector 1 network-instance mgmt
+set / system sflow collector 1 source-address 10.148.18.44
+set / system sflow collector 1 port 6343
+set / system logging file messages rotate 20
+set / system logging file messages size 128K
+set / system aaa authentication user tempnet password $y$j9T$0b63d56fcde40c40$Gu22giHw29nEqYic1.3eLjQAP.kn3LdDtZDjU92lFS4
+set / system aaa authentication user tempnet role [ super-user-local ]
+set / system aaa authorization role super-user-local superuser true
+set / system aaa authorization role super-user-local services [ cli gnmi netconf ]
+set / system netconf-server mgmt admin-state enable
+set / system netconf-server mgmt ssh-server mgmt
+set / network-instance blue type ip-vrf
+set / network-instance blue interface ethernet-1/1.2
+set / network-instance blue interface irb0.162
+set / network-instance blue interface irb0.2
+set / network-instance blue interface lo1.0
+set / network-instance blue protocols bgp admin-state enable
+set / network-instance blue protocols bgp autonomous-system 4200004113
+set / network-instance blue protocols bgp router-id 10.148.32.12
+set / network-instance blue protocols bgp dynamic-neighbors accept match 10.148.33.128/25 peer-group slb
+set / network-instance blue protocols bgp dynamic-neighbors accept match 10.148.33.128/25 allowed-peer-as [ 4200004113 ]
+set / network-instance blue protocols bgp dynamic-neighbors accept match 10.148.145.0/24 peer-group anycast-rack
+set / network-instance blue protocols bgp dynamic-neighbors accept match 10.148.145.0/24 allowed-peer-as [ 4200004113 ]
+set / network-instance blue protocols bgp dynamic-neighbors interface ethernet-1/1.2 peer-group spine
+set / network-instance blue protocols bgp dynamic-neighbors interface ethernet-1/1.2 allowed-peer-as [ 4200004096..4200005119 ]
+set / network-instance blue protocols bgp graceful-restart admin-state enable
+set / network-instance blue protocols bgp afi-safi ipv4-unicast admin-state enable
+set / network-instance blue protocols bgp afi-safi ipv4-unicast multipath allow-multiple-as true
+set / network-instance blue protocols bgp group anycast-rack peer-as 4200004113
+set / network-instance blue protocols bgp group anycast-rack afi-safi ipv4-unicast admin-state enable
+set / network-instance blue protocols bgp group slb peer-as 4200004113
+set / network-instance blue protocols bgp group slb afi-safi ipv4-unicast admin-state enable
+set / network-instance blue protocols bgp group spine afi-safi ipv4-unicast admin-state enable
+set / network-instance mac-vrf-1 type mac-vrf
+set / network-instance mac-vrf-1 interface ethernet-1/10/1.1
+set / network-instance mac-vrf-1 interface irb0.1
+set / network-instance mac-vrf-162 type mac-vrf
+set / network-instance mac-vrf-162 interface ethernet-1/10/1.162
+set / network-instance mac-vrf-162 interface irb0.162
+set / network-instance mac-vrf-2 type mac-vrf
+set / network-instance mac-vrf-2 interface ethernet-1/10/1.2
+set / network-instance mac-vrf-2 interface irb0.2
+set / network-instance red type ip-vrf
+set / network-instance red interface ethernet-1/1.1
+set / network-instance red interface irb0.1
+set / network-instance red protocols bgp autonomous-system 4200004369
+set / network-instance red protocols bgp router-id 10.148.32.12
+set / network-instance red protocols bgp dynamic-neighbors accept match 10.148.33.0/25 peer-group slb
+set / network-instance red protocols bgp dynamic-neighbors accept match 10.148.33.0/25 allowed-peer-as [ 4200004369 ]
+set / network-instance red protocols bgp dynamic-neighbors accept match 10.148.252.0/23 peer-group cilium
+set / network-instance red protocols bgp dynamic-neighbors accept match 10.148.252.0/23 allowed-peer-as [ 4200004369 ]
+set / network-instance red protocols bgp dynamic-neighbors interface ethernet-1/1.1 peer-group spine
+set / network-instance red protocols bgp dynamic-neighbors interface ethernet-1/1.1 allowed-peer-as [ 4200004096..4200005119 ]
+set / network-instance red protocols bgp graceful-restart admin-state enable
+set / network-instance red protocols bgp afi-safi ipv4-unicast admin-state enable
+set / network-instance red protocols bgp afi-safi ipv4-unicast multipath allow-multiple-as true
+set / network-instance red protocols bgp group cilium peer-as 4200004369
+set / network-instance red protocols bgp group cilium afi-safi ipv4-unicast admin-state enable
+set / network-instance red protocols bgp group slb peer-as 4200004369
+set / network-instance red protocols bgp group slb afi-safi ipv4-unicast admin-state enable
+set / network-instance red protocols bgp group spine afi-safi ipv4-unicast admin-state enable
