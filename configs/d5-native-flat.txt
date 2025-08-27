@@ -117,6 +117,12 @@ set / network-instance blue protocols bgp group anycast-rack afi-safi ipv4-unica
 set / network-instance blue protocols bgp group slb peer-as 4200004113
 set / network-instance blue protocols bgp group slb afi-safi ipv4-unicast admin-state enable
 set / network-instance blue protocols bgp group spine afi-safi ipv4-unicast admin-state enable
+set / network-instance blue protocols bgp group anycast-rack afi-safi ipv4-unicast export-policy [ blue_export_anycast-rack ]
+set / network-instance blue protocols bgp group anycast-rack afi-safi ipv4-unicast import-policy [ blue_import_anycast-rack ]
+set / network-instance blue protocols bgp group slb afi-safi ipv4-unicast export-policy [ blue_export_slb ]
+set / network-instance blue protocols bgp group slb afi-safi ipv4-unicast import-policy [ blue_import_slb ]
+set / network-instance blue protocols bgp group spine afi-safi ipv4-unicast export-policy [ blue_export_spine ]
+set / network-instance blue protocols bgp group spine afi-safi ipv4-unicast import-policy [ blue_import_spine ]
 set / network-instance mac-vrf-1 type mac-vrf
 set / network-instance mac-vrf-1 interface ethernet-1/10/1.1
 set / network-instance mac-vrf-1 interface irb0.1
@@ -155,6 +161,12 @@ set / network-instance red protocols bgp group cilium afi-safi ipv4-unicast admi
 set / network-instance red protocols bgp group slb peer-as 4200004369
 set / network-instance red protocols bgp group slb afi-safi ipv4-unicast admin-state enable
 set / network-instance red protocols bgp group spine afi-safi ipv4-unicast admin-state enable
+set / network-instance red protocols bgp group cilium afi-safi ipv4-unicast export-policy [ red_export_cilium ]
+set / network-instance red protocols bgp group cilium afi-safi ipv4-unicast import-policy [ red_import_cilium ]
+set / network-instance red protocols bgp group slb afi-safi ipv4-unicast export-policy [ red_export_slb ]
+set / network-instance red protocols bgp group slb afi-safi ipv4-unicast import-policy [ red_import_slb ]
+set / network-instance red protocols bgp group spine afi-safi ipv4-unicast export-policy [ red_export_spine ]
+set / network-instance red protocols bgp group spine afi-safi ipv4-unicast import-policy [ red_import_spine ]
 
 ## Control plane ACL
 set / acl acl-filter cpm type ipv4 statistics-per-entry true
