@@ -1,0 +1,187 @@
+## Interfaces
+set / interfaces interface ethernet-1/1 config name ethernet-1/1
+set / interfaces interface ethernet-1/1 config type ethernetCsmacd
+set / interfaces interface ethernet-1/1 config mtu 9216
+set / interfaces interface ethernet-1/1 config description To-spine
+set / interfaces interface ethernet-1/1 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 config index 1
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 ipv4 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 ipv6 router-advertisement config enable true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 ipv6 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 vlan match single-tagged config vlan-id 1
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 config index 2
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 ipv4 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 ipv6 router-advertisement config enable true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 ipv6 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 vlan match single-tagged config vlan-id 2
+set / interfaces interface ethernet-1/10 config name ethernet-1/10
+set / interfaces interface ethernet-1/10 config type ethernetCsmacd
+set / interfaces interface ethernet-1/10 config enabled true
+set / interfaces interface ethernet-1/10/1 config name ethernet-1/10/1
+set / interfaces interface ethernet-1/10/1 config type ethernetCsmacd
+set / interfaces interface ethernet-1/10/1 config enabled true
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 1 config index 1
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 1 vlan match single-tagged config vlan-id 1
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 2 config index 2
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 2 vlan match single-tagged config vlan-id 2
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 162 config index 162
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 162 config enabled true
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 162 vlan match single-tagged config vlan-id 162
+set / interfaces interface irb0 config name irb0
+set / interfaces interface irb0 config type ipForward
+set / interfaces interface irb0 config enabled true
+set / interfaces interface irb0 subinterfaces subinterface 1 config index 1
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 addresses address 10.148.33.1 config ip 10.148.33.1
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 addresses address 10.148.33.1 config prefix-length 25
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 addresses address 10.148.252.1 config ip 10.148.252.1
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 addresses address 10.148.252.1 config prefix-length 23
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 config enabled true
+set / interfaces interface irb0 subinterfaces subinterface 2 config index 2
+set / interfaces interface irb0 subinterfaces subinterface 2 ipv4 addresses address 10.148.33.129 config ip 10.148.33.129
+set / interfaces interface irb0 subinterfaces subinterface 2 ipv4 addresses address 10.148.33.129 config prefix-length 25
+set / interfaces interface irb0 subinterfaces subinterface 2 ipv4 config enabled true
+set / interfaces interface irb0 subinterfaces subinterface 162 config index 162
+set / interfaces interface irb0 subinterfaces subinterface 162 ipv4 addresses address 10.148.145.1 config ip 10.148.145.1
+set / interfaces interface irb0 subinterfaces subinterface 162 ipv4 addresses address 10.148.145.1 config prefix-length 24
+set / interfaces interface irb0 subinterfaces subinterface 162 ipv4 config enabled true
+set / interfaces interface lo1 config name lo1
+set / interfaces interface lo1 config type softwareLoopback
+set / interfaces interface lo1 config enabled true
+set / interfaces interface lo1 subinterfaces subinterface 0 config index 0
+set / interfaces interface lo1 subinterfaces subinterface 0 ipv4 addresses address 10.148.32.150 config ip 10.148.32.150
+set / interfaces interface lo1 subinterfaces subinterface 0 ipv4 addresses address 10.148.32.150 config prefix-length 32
+set / interfaces interface lo1 subinterfaces subinterface 0 ipv4 config enabled true
+set / interfaces interface mgmt0 config name mgmt0
+set / interfaces interface mgmt0 config type ethernetCsmacd
+set / interfaces interface mgmt0 config mtu 9216
+set / interfaces interface mgmt0 config enabled true
+set / interfaces interface mgmt0 subinterfaces subinterface 0 config index 0
+set / interfaces interface mgmt0 subinterfaces subinterface 0 config enabled true
+set / interfaces interface mgmt0 subinterfaces subinterface 0 ipv4 config enabled true
+set / interfaces interface mgmt0 subinterfaces subinterface 0 ipv6 config enabled true
+set / interfaces interface system0 config name system0
+set / interfaces interface system0 config type softwareLoopback
+set / interfaces interface system0 subinterfaces subinterface 0 config index 0
+set / interfaces interface system0 subinterfaces subinterface 0 ipv4 addresses address 10.148.32.12 config ip 10.148.32.12
+set / interfaces interface system0 subinterfaces subinterface 0 ipv4 addresses address 10.148.32.12 config prefix-length 32
+set / interfaces interface system0 subinterfaces subinterface 0 ipv4 config enabled true
+
+## System
+
+set / system config hostname vat-sw-abc21
+set / system aaa authentication users user tempnet config username tempnet
+set / system aaa authentication users user tempnet config role super-user-local
+set / system aaa server-groups server-group local config name local
+set / system ssh-server config enable true
+set / system ssh-server config rate-limit 5
+set / system clock config timezone-name Africa/Accra
+set / system dns servers server 10.255.255.254 config address 10.255.255.254
+set / system dns servers server 8.8.8.8 config address 8.8.8.8
+set / system dns servers server 8.8.4.4 config address 8.8.4.4
+set / system ntp servers server 216.239.35.0 config address 216.239.35.0
+set / system ntp servers server 216.239.35.0 config network-instance mgmt
+set / system control-plane-traffic ingress acl acl-set cpm type ACL_IPV4 config set-name cpm
+set / system control-plane-traffic ingress acl acl-set cpm type ACL_IPV4 config type ACL_IPV4
+set / system control-plane-traffic ingress acl acl-set cpm type ACL_IPV6 config set-name cpm
+set / system control-plane-traffic ingress acl acl-set cpm type ACL_IPV6 config type ACL_IPV6
+set / system grpc-servers grpc-server insecure-mgmt config name insecure-mgmt
+set / system grpc-servers grpc-server insecure-mgmt config enable true
+set / system grpc-servers grpc-server insecure-mgmt config port 57401
+set / system grpc-servers grpc-server insecure-mgmt config network-instance mgmt
+set / system grpc-servers grpc-server insecure-mgmt config services [ GNMI GNSI GRIBI P4RT ]
+
+## Network Instances
+
+set / network-instances network-instance blue config name blue
+set / network-instances network-instance blue config type L3VRF
+set / network-instances network-instance blue interfaces interface ethernet-1/1.2 config id ethernet-1/1.2
+set / network-instances network-instance blue interfaces interface irb0.162 config id irb0.162
+set / network-instances network-instance blue interfaces interface irb0.2 config id irb0.2
+set / network-instances network-instance blue interfaces interface lo1.0 config id lo1.0
+set / network-instances network-instance blue protocols protocol BGP name BGP config identifier BGP
+set / network-instances network-instance blue protocols protocol BGP name BGP config name BGP
+set / network-instances network-instance blue protocols protocol BGP name BGP config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global config as 4200004113
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global config router-id 10.148.32.12
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global graceful-restart config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST use-multiple-paths ebgp config allow-multiple-as true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.33.128/25 config prefix 10.148.33.128/25
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.33.128/25 config peer-group slb
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.145.0/24 config prefix 10.148.145.0/24
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.145.0/24 config peer-group anycast-rack
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack config peer-group-name anycast-rack
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack config peer-as 4200004113
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb config peer-group-name slb
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb config peer-as 4200004113
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine config peer-group-name spine
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance mac-vrf-1 config name mac-vrf-1
+set / network-instances network-instance mac-vrf-1 config type L2VSI
+set / network-instances network-instance mac-vrf-1 interfaces interface ethernet-1/10/1.1 config id ethernet-1/10/1.1
+set / network-instances network-instance mac-vrf-1 interfaces interface irb0.1 config id irb0.1
+set / network-instances network-instance mac-vrf-162 config name mac-vrf-162
+set / network-instances network-instance mac-vrf-162 config type L2VSI
+set / network-instances network-instance mac-vrf-162 interfaces interface ethernet-1/10/1.162 config id ethernet-1/10/1.162
+set / network-instances network-instance mac-vrf-162 interfaces interface irb0.162 config id irb0.162
+set / network-instances network-instance mac-vrf-2 config name mac-vrf-2
+set / network-instances network-instance mac-vrf-2 config type L2VSI
+set / network-instances network-instance mac-vrf-2 interfaces interface ethernet-1/10/1.2 config id ethernet-1/10/1.2
+set / network-instances network-instance mac-vrf-2 interfaces interface irb0.2 config id irb0.2
+set / network-instances network-instance mgmt config name mgmt
+set / network-instances network-instance mgmt config type L3VRF
+set / network-instances network-instance mgmt config description "Management network instance"
+set / network-instances network-instance mgmt interfaces interface mgmt0.0 config id mgmt0.0
+set / network-instances network-instance mgmt protocols protocol STATIC name static config identifier STATIC
+set / network-instances network-instance mgmt protocols protocol STATIC name static config name static
+set / network-instances network-instance mgmt protocols protocol STATIC name static static-routes
+set / network-instances network-instance red config name red
+set / network-instances network-instance red config type L3VRF
+set / network-instances network-instance red interfaces interface ethernet-1/1.1 config id ethernet-1/1.1
+set / network-instances network-instance red interfaces interface irb0.1 config id irb0.1
+set / network-instances network-instance red protocols protocol BGP name BGP config identifier BGP
+set / network-instances network-instance red protocols protocol BGP name BGP config name BGP
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global config as 4200004369
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global config router-id 10.148.32.12
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global graceful-restart config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST use-multiple-paths ebgp config allow-multiple-as true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.33.0/25 config prefix 10.148.33.0/25
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.33.0/25 config peer-group slb
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.252.0/23 config prefix 10.148.252.0/23
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.252.0/23 config peer-group cilium
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium config peer-group-name cilium
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium config peer-as 4200004369
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb config peer-group-name slb
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb config peer-as 4200004369
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine config peer-group-name spine
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config enabled true
+
+## Control plane ACL
+
+set / acl acl-sets acl-set cpm type ACL_IPV4 config name cpm
+set / acl acl-sets acl-set cpm type ACL_IPV4 config type ACL_IPV4
+set / acl acl-sets acl-set cpm type ACL_IPV4 acl-entries acl-entry 10 config sequence-id 10
+set / acl acl-sets acl-set cpm type ACL_IPV4 acl-entries acl-entry 10 config description "Accept incoming ICMP unreachable messages"
+set / acl acl-sets acl-set cpm type ACL_IPV4 acl-entries acl-entry 10 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set cpm type ACL_IPV4 acl-entries acl-entry 10 ipv4 icmpv4 config type DST_UNREACHABLE
+set / acl acl-sets acl-set cpm type ACL_IPV4 acl-entries acl-entry 10 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 config name cpm
+set / acl acl-sets acl-set cpm type ACL_IPV6 config type ACL_IPV6
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 config sequence-id 10
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 config description "Accept incoming ICMPv6 unreachable messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 ipv6 icmpv6 config type DESTINATION_UNREACHABLE
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 actions config forwarding-action ACCEPT
