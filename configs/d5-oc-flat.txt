@@ -1,4 +1,5 @@
 ## Interfaces
+
 set / interfaces interface ethernet-1/1 config name ethernet-1/1
 set / interfaces interface ethernet-1/1 config type ethernetCsmacd
 set / interfaces interface ethernet-1/1 config mtu 9216
@@ -122,6 +123,12 @@ set / network-instances network-instance blue protocols protocol BGP name BGP bg
 set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine config peer-group-name spine
 set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
 set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ blue_import_anycast-rack ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ blue_export_anycast-rack ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ blue_import_slb ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ blue_export_slb ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ blue_import_spine ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ blue_export_spine ]
 set / network-instances network-instance mac-vrf-1 config name mac-vrf-1
 set / network-instances network-instance mac-vrf-1 config type L2VSI
 set / network-instances network-instance mac-vrf-1 interfaces interface ethernet-1/10/1.1 config id ethernet-1/10/1.1
@@ -168,6 +175,12 @@ set / network-instances network-instance red protocols protocol BGP name BGP bgp
 set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine config peer-group-name spine
 set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
 set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ red_import_cilium ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ red_export_cilium ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ red_import_slb ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ red_export_slb ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ red_import_spine ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ red_export_spine ]
 
 ## Control plane ACL
 
@@ -185,3 +198,330 @@ set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 config des
 set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 ipv6 config protocol 58
 set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 ipv6 icmpv6 config type DESTINATION_UNREACHABLE
 set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 actions config forwarding-action ACCEPT
+
+## Route Policies
+
+set / routing-policy defined-sets prefix-sets prefix-set PL-10.255.0.0_24-UPTO32 config name PL-10.255.0.0_24-UPTO32
+set / routing-policy defined-sets prefix-sets prefix-set PL-10.255.0.0_24-UPTO32 prefixes prefix 10.255.0.0/24 masklength-range 24..32 config ip-prefix 10.255.0.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-10.255.0.0_24-UPTO32 prefixes prefix 10.255.0.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SLB-DIR-ACC1 config name PL-BLUE-EXP-SLB-DIR-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SLB-DIR-ACC1 prefixes prefix 10.148.145.0/24 masklength-range exact config ip-prefix 10.148.145.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SLB-DIR-ACC1 prefixes prefix 10.148.145.0/24 masklength-range exact config masklength-range exact
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 config name PL-BLUE-EXP-SPINE-BGP-REJ2
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.33.0/24 masklength-range 24..32 config ip-prefix 10.148.33.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.33.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.36.0/22 masklength-range 22..32 config ip-prefix 10.148.36.0/22
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.36.0/22 masklength-range 22..32 config masklength-range 22..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.40.0/22 masklength-range 22..32 config ip-prefix 10.148.40.0/22
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.40.0/22 masklength-range 22..32 config masklength-range 22..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.47.0/24 masklength-range 24..32 config ip-prefix 10.148.47.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.47.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1 config name PL-BLUE-EXP-SPINE-DIR-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1 prefixes prefix 10.148.128.0/17 masklength-range 17..32 config ip-prefix 10.148.128.0/17
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1 prefixes prefix 10.148.128.0/17 masklength-range 17..32 config masklength-range 17..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2 config name PL-BLUE-EXP-SPINE-DIR-ACC2
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2 prefixes prefix 10.148.32.150/32 masklength-range exact config ip-prefix 10.148.32.150/32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2 prefixes prefix 10.148.32.150/32 masklength-range exact config masklength-range exact
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 config name PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.148.252.0/23 masklength-range 23..32 config ip-prefix 10.148.252.0/23
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.148.252.0/23 masklength-range 23..32 config masklength-range 23..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.148.254.0/23 masklength-range 23..32 config ip-prefix 10.148.254.0/23
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.148.254.0/23 masklength-range 23..32 config masklength-range 23..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.255.0.0/24 masklength-range 24..32 config ip-prefix 10.255.0.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.255.0.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 172.16.0.0/12 masklength-range 12..32 config ip-prefix 172.16.0.0/12
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 172.16.0.0/12 masklength-range 12..32 config masklength-range 12..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-EXACT config name PL-DEFAULT-EXACT
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-EXACT prefixes prefix 0.0.0.0/0 masklength-range exact config ip-prefix 0.0.0.0/0
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-EXACT prefixes prefix 0.0.0.0/0 masklength-range exact config masklength-range exact
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-UPTO32 config name PL-DEFAULT-UPTO32
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-UPTO32 prefixes prefix 0.0.0.0/0 masklength-range 0..32 config ip-prefix 0.0.0.0/0
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-UPTO32 prefixes prefix 0.0.0.0/0 masklength-range 0..32 config masklength-range 0..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 config name PL-RED-EXP-SPINE-BGP-REJ1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.33.0/24 masklength-range 24..32 config ip-prefix 10.148.33.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.33.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.36.0/22 masklength-range 22..32 config ip-prefix 10.148.36.0/22
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.36.0/22 masklength-range 22..32 config masklength-range 22..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.40.0/22 masklength-range 22..32 config ip-prefix 10.148.40.0/22
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.40.0/22 masklength-range 22..32 config masklength-range 22..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.47.0/24 masklength-range 24..32 config ip-prefix 10.148.47.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.47.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC1 config name PL-RED-EXP-SPINE-DIR-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC1 prefixes prefix 10.148.128.0/17 masklength-range 17..32 config ip-prefix 10.148.128.0/17
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC1 prefixes prefix 10.148.128.0/17 masklength-range 17..32 config masklength-range 17..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC2 config name PL-RED-EXP-SPINE-DIR-ACC2
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC2 prefixes prefix 10.148.32.12/32 masklength-range exact config ip-prefix 10.148.32.12/32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC2 prefixes prefix 10.148.32.12/32 masklength-range exact config masklength-range exact
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-REJ1 config name PL-RED-EXP-SPINE-DIR-REJ1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-REJ1 prefixes prefix 10.148.252.0/23 masklength-range 23..32 config ip-prefix 10.148.252.0/23
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-REJ1 prefixes prefix 10.148.252.0/23 masklength-range 23..32 config masklength-range 23..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC1 config name PL-RED-IMP-CILIUM-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC1 prefixes prefix 199.250.172.112/28 masklength-range 28..32 config ip-prefix 199.250.172.112/28
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC1 prefixes prefix 199.250.172.112/28 masklength-range 28..32 config masklength-range 28..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC2 config name PL-RED-IMP-CILIUM-ACC2
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC2 prefixes prefix 199.250.172.128/26 masklength-range 26..32 config ip-prefix 199.250.172.128/26
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC2 prefixes prefix 199.250.172.128/26 masklength-range 26..32 config masklength-range 26..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 config name PL-RED-IMP-SLB-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.64/27 masklength-range 27..32 config ip-prefix 199.250.172.64/27
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.64/27 masklength-range 27..32 config masklength-range 27..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.96/29 masklength-range 29..32 config ip-prefix 199.250.172.96/29
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.96/29 masklength-range 29..32 config masklength-range 29..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.128/26 masklength-range 26..32 config ip-prefix 199.250.172.128/26
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.128/26 masklength-range 26..32 config masklength-range 26..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.192/26 masklength-range 26..32 config ip-prefix 199.250.172.192/26
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.192/26 masklength-range 26..32 config masklength-range 26..32
+set / routing-policy policy-definitions policy-definition DENY-ALL config name DENY-ALL
+set / routing-policy policy-definitions policy-definition blue_export_anycast-rack config name blue_export_anycast-rack
+set / routing-policy policy-definitions policy-definition blue_export_slb config name blue_export_slb
+set / routing-policy policy-definitions policy-definition blue_export_slb statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_export_slb statements statement 10 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition blue_export_slb statements statement 10 conditions match-prefix-set config prefix-set PL-BLUE-EXP-SLB-DIR-ACC1
+set / routing-policy policy-definitions policy-definition blue_export_slb statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine config name blue_export_spine
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 10 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 10 actions config policy-result REJECT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 20 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 20 conditions match-prefix-set config prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 20 actions config policy-result REJECT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 30 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 30 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 40 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 40 conditions match-prefix-set config prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 50 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 50 conditions match-prefix-set config prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack config name blue_import_anycast-rack
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 10 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 20 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 30 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 40 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 50 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 60 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 70 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 80 conditions match-prefix-set config prefix-set PL-10.255.0.0_24-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb config name blue_import_slb
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 20 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 30 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 40 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 50 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 60 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 70 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 80 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 90 config name 90
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 90 conditions match-prefix-set config prefix-set PL-10.255.0.0_24-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 90 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine config name blue_import_spine
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 20 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 30 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 40 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 50 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 60 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 70 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 80 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_cilium config name red_export_cilium
+set / routing-policy policy-definitions policy-definition red_export_cilium statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_export_cilium statements statement 10 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition red_export_cilium statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition red_export_cilium statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_slb config name red_export_slb
+set / routing-policy policy-definitions policy-definition red_export_slb statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_export_slb statements statement 10 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition red_export_slb statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition red_export_slb statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine config name red_export_spine
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 10 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 10 conditions match-prefix-set config prefix-set PL-RED-EXP-SPINE-BGP-REJ1
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 10 actions config policy-result REJECT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 20 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 20 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 30 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 30 conditions match-prefix-set config prefix-set PL-RED-EXP-SPINE-DIR-REJ1
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 30 actions config policy-result REJECT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 40 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 40 conditions match-prefix-set config prefix-set PL-RED-EXP-SPINE-DIR-ACC1
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 50 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 50 conditions match-prefix-set config prefix-set PL-RED-EXP-SPINE-DIR-ACC2
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium config name red_import_cilium
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 10 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC1
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 20 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 30 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 40 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 50 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 60 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 70 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 80 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC1
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb config name red_import_slb
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 10 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 20 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 30 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 40 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 50 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 60 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 70 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 80 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine config name red_import_spine
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 20 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 30 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 40 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 50 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 60 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 70 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 80 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 80 actions config policy-result ACCEPT_ROUTE
+
