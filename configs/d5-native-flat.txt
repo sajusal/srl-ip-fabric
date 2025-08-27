@@ -1,3 +1,4 @@
+## Interfaces
 set / interface ethernet-1/1 description To-spine
 set / interface ethernet-1/1 admin-state enable
 set / interface ethernet-1/1 mtu 9216
@@ -42,8 +43,15 @@ set / interface irb0 subinterface 162 ipv4 dhcp-relay server [ 10.255.0.67 ]
 set / interface lo1 admin-state enable
 set / interface lo1 subinterface 0 ipv4 admin-state enable
 set / interface lo1 subinterface 0 ipv4 address 10.148.32.150/32
+set / interface mgmt0 admin-state enable
+set / interface mgmt0 mtu 9216
+set / interface mgmt0 subinterface 0 admin-state enable
+set / interface mgmt0 subinterface 0 ipv4 admin-state enable
+set / interface mgmt0 subinterface 0 ipv6 admin-state enable
 set / interface system0 subinterface 0 ipv4 admin-state enable
 set / interface system0 subinterface 0 ipv4 address 10.148.32.12/32
+
+## System
 set / system management openconfig admin-state enable
 set / system control-plane-traffic input acl acl-filter cpm type ipv4
 set / system control-plane-traffic input acl acl-filter cpm type ipv6
@@ -54,21 +62,17 @@ set / system configuration auto-save true
 set / system configuration role super-user-local rule / action write
 set / system lldp admin-state enable
 set / system name host-name vat-sw-abc21
-set / system grpc-server mgmt admin-state enable
-set / system grpc-server mgmt rate-limit 65000
-set / system grpc-server mgmt tls-profile clab-profile
-set / system grpc-server mgmt network-instance mgmt
-set / system grpc-server mgmt port 50051
-set / system grpc-server mgmt trace-options [ request response common ]
-set / system grpc-server mgmt services [ gnmi gnoi gnsi gribi p4rt ]
-set / system grpc-server mgmt unix-socket admin-state enable
+set / system grpc-server insecure-mgmt admin-state enable
+set / system grpc-server insecure-mgmt rate-limit 65000
+set / system grpc-server insecure-mgmt network-instance mgmt
+set / system grpc-server insecure-mgmt port 57401
+set / system grpc-server insecure-mgmt services [ gnmi gnoi gnsi gribi p4rt ]
 set / system ssh-server mgmt admin-state enable
 set / system ssh-server mgmt network-instance mgmt
 set / system ssh-server mgmt rate-limit 5
 set / system ssh-server mgmt-netconf admin-state enable
 set / system ssh-server mgmt-netconf network-instance mgmt
 set / system ssh-server mgmt-netconf port 830
-set / system ssh-server mgmt-netconf disable-shell true
 set / system dns network-instance mgmt
 set / system dns server-list [ 10.255.255.254 8.8.8.8 8.8.4.4 ]
 set / system ntp server 216.239.35.0 network-instance mgmt
@@ -78,6 +82,9 @@ set / system sflow collector 1 collector-address 10.148.131.44
 set / system sflow collector 1 network-instance mgmt
 set / system sflow collector 1 source-address 10.148.18.44
 set / system sflow collector 1 port 6343
+set / system logging buffer messages rotate 3
+set / system logging buffer messages size 10000000
+set / system logging file interactive-commands subsystem aaa
 set / system logging file messages rotate 20
 set / system logging file messages size 128K
 set / system aaa authentication user tempnet password $y$j9T$0b63d56fcde40c40$Gu22giHw29nEqYic1.3eLjQAP.kn3LdDtZDjU92lFS4
@@ -86,6 +93,8 @@ set / system aaa authorization role super-user-local superuser true
 set / system aaa authorization role super-user-local services [ cli gnmi netconf ]
 set / system netconf-server mgmt admin-state enable
 set / system netconf-server mgmt ssh-server mgmt
+
+## Network Instances
 set / network-instance blue type ip-vrf
 set / network-instance blue interface ethernet-1/1.2
 set / network-instance blue interface irb0.162
@@ -117,6 +126,16 @@ set / network-instance mac-vrf-162 interface irb0.162
 set / network-instance mac-vrf-2 type mac-vrf
 set / network-instance mac-vrf-2 interface ethernet-1/10/1.2
 set / network-instance mac-vrf-2 interface irb0.2
+set / network-instance mgmt type ip-vrf
+set / network-instance mgmt admin-state enable
+set / network-instance mgmt description "Management network instance"
+set / network-instance mgmt interface mgmt0.0
+set / network-instance mgmt protocols linux import-routes true
+set / network-instance mgmt protocols linux export-routes true
+set / network-instance mgmt protocols linux export-neighbors true
+set / network-instance mgmt static-routes route 0.0.0.0/0 admin-state disable
+set / network-instance mgmt static-routes route 0.0.0.0/0 next-hop-group nhg-def-mgmt
+set / network-instance mgmt next-hop-groups group nhg-def-mgmt nexthop 1 ip-address 10.148.18.1
 set / network-instance red type ip-vrf
 set / network-instance red interface ethernet-1/1.1
 set / network-instance red interface irb0.1
@@ -136,3 +155,14 @@ set / network-instance red protocols bgp group cilium afi-safi ipv4-unicast admi
 set / network-instance red protocols bgp group slb peer-as 4200004369
 set / network-instance red protocols bgp group slb afi-safi ipv4-unicast admin-state enable
 set / network-instance red protocols bgp group spine afi-safi ipv4-unicast admin-state enable
+
+## Control plane ACL
+set / acl acl-filter cpm type ipv4 statistics-per-entry true
+set / acl acl-filter cpm type ipv4 entry 10 description "Accept incoming ICMP unreachable messages"
+set / acl acl-filter cpm type ipv4 entry 10 match ipv4 protocol icmp
+set / acl acl-filter cpm type ipv4 entry 10 match ipv4 icmp type dest-unreachable
+set / acl acl-filter cpm type ipv4 entry 10 action accept rate-limit system-cpu-policer icmp
+set / acl acl-filter cpm type ipv6 statistics-per-entry true
+set / acl acl-filter cpm type ipv6 entry 10 description "Accept incoming ICMPv6 unreachable messages"
+set / acl acl-filter cpm type ipv6 entry 10 match ipv6 next-header icmp6
+set / acl acl-filter cpm type ipv6 entry 10 match ipv6 icmp6 type dest-unreachable
