@@ -166,3 +166,274 @@ set / acl acl-filter cpm type ipv6 statistics-per-entry true
 set / acl acl-filter cpm type ipv6 entry 10 description "Accept incoming ICMPv6 unreachable messages"
 set / acl acl-filter cpm type ipv6 entry 10 match ipv6 next-header icmp6
 set / acl acl-filter cpm type ipv6 entry 10 match ipv6 icmp6 type dest-unreachable
+
+## Route Policies
+set / routing-policy community-set C-64700-110 member [ 64700:110 ]
+set / routing-policy community-set C-64700-115 member [ 64700:115 ]
+set / routing-policy community-set C-64700-120 member [ 64700:120 ]
+set / routing-policy community-set C-64700-125 member [ 64700:125 ]
+set / routing-policy community-set C-64800-90 member [ 64800:90 ]
+set / routing-policy community-set C-65400-125 member [ 65400:125 ]
+set / routing-policy community-set C-65535-0 member [ 65535:0 ]
+set / routing-policy prefix-set PL-10.255.0.0_24-UPTO32 prefix 10.255.0.0/24 mask-length-range 24..32
+set / routing-policy prefix-set PL-BLUE-EXP-SLB-DIR-ACC1 prefix 10.148.145.0/24 mask-length-range exact
+set / routing-policy prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefix 10.148.33.0/24 mask-length-range 24..32
+set / routing-policy prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefix 10.148.36.0/22 mask-length-range 22..32
+set / routing-policy prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefix 10.148.40.0/22 mask-length-range 22..32
+set / routing-policy prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefix 10.148.47.0/24 mask-length-range 24..32
+set / routing-policy prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1 prefix 10.148.128.0/17 mask-length-range 17..32
+set / routing-policy prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2 prefix 10.148.32.150/32 mask-length-range exact
+set / routing-policy prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefix 10.148.252.0/23 mask-length-range 23..32
+set / routing-policy prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefix 10.148.254.0/23 mask-length-range 23..32
+set / routing-policy prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefix 10.255.0.0/24 mask-length-range 24..32
+set / routing-policy prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefix 172.16.0.0/12 mask-length-range 12..32
+set / routing-policy prefix-set PL-DEFAULT-EXACT prefix 0.0.0.0/0 mask-length-range exact
+set / routing-policy prefix-set PL-DEFAULT-UPTO32 prefix 0.0.0.0/0 mask-length-range 0..32
+set / routing-policy prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefix 10.148.33.0/24 mask-length-range 24..32
+set / routing-policy prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefix 10.148.36.0/22 mask-length-range 22..32
+set / routing-policy prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefix 10.148.40.0/22 mask-length-range 22..32
+set / routing-policy prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefix 10.148.47.0/24 mask-length-range 24..32
+set / routing-policy prefix-set PL-RED-EXP-SPINE-DIR-ACC1 prefix 10.148.128.0/17 mask-length-range 17..32
+set / routing-policy prefix-set PL-RED-EXP-SPINE-DIR-ACC2 prefix 10.148.32.12/32 mask-length-range exact
+set / routing-policy prefix-set PL-RED-EXP-SPINE-DIR-REJ1 prefix 10.148.252.0/23 mask-length-range 23..32
+set / routing-policy prefix-set PL-RED-IMP-CILIUM-ACC1 prefix 199.250.172.112/28 mask-length-range 28..32
+set / routing-policy prefix-set PL-RED-IMP-CILIUM-ACC2 prefix 199.250.172.128/26 mask-length-range 26..32
+set / routing-policy prefix-set PL-RED-IMP-SLB-ACC1 prefix 199.250.172.64/27 mask-length-range 27..32
+set / routing-policy prefix-set PL-RED-IMP-SLB-ACC1 prefix 199.250.172.96/29 mask-length-range 29..32
+set / routing-policy prefix-set PL-RED-IMP-SLB-ACC1 prefix 199.250.172.128/26 mask-length-range 26..32
+set / routing-policy prefix-set PL-RED-IMP-SLB-ACC1 prefix 199.250.172.192/26 mask-length-range 26..32
+set / routing-policy policy DENY-ALL default-action policy-result reject
+set / routing-policy policy blue_export_anycast-rack default-action policy-result reject
+set / routing-policy policy blue_export_slb default-action policy-result reject
+set / routing-policy policy blue_export_slb statement 10 match protocol local
+set / routing-policy policy blue_export_slb statement 10 match prefix prefix-set PL-BLUE-EXP-SLB-DIR-ACC1
+set / routing-policy policy blue_export_slb statement 10 action policy-result accept
+set / routing-policy policy blue_export_spine default-action policy-result reject
+set / routing-policy policy blue_export_spine statement 10 match protocol bgp
+set / routing-policy policy blue_export_spine statement 10 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy blue_export_spine statement 10 action policy-result reject
+set / routing-policy policy blue_export_spine statement 20 match protocol bgp
+set / routing-policy policy blue_export_spine statement 20 match prefix prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2
+set / routing-policy policy blue_export_spine statement 20 action policy-result reject
+set / routing-policy policy blue_export_spine statement 30 match protocol bgp
+set / routing-policy policy blue_export_spine statement 30 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy blue_export_spine statement 30 action policy-result accept
+set / routing-policy policy blue_export_spine statement 40 match protocol local
+set / routing-policy policy blue_export_spine statement 40 match prefix prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1
+set / routing-policy policy blue_export_spine statement 40 action policy-result accept
+set / routing-policy policy blue_export_spine statement 50 match protocol local
+set / routing-policy policy blue_export_spine statement 50 match prefix prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2
+set / routing-policy policy blue_export_spine statement 50 action policy-result accept
+set / routing-policy policy blue_import_anycast-rack default-action policy-result reject
+set / routing-policy policy blue_import_anycast-rack statement 10 match prefix prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy blue_import_anycast-rack statement 10 match bgp community-set C-64700-125
+set / routing-policy policy blue_import_anycast-rack statement 10 action policy-result accept
+set / routing-policy policy blue_import_anycast-rack statement 10 action bgp local-preference set 125
+set / routing-policy policy blue_import_anycast-rack statement 20 match prefix prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy blue_import_anycast-rack statement 20 match bgp community-set C-64700-120
+set / routing-policy policy blue_import_anycast-rack statement 20 action policy-result accept
+set / routing-policy policy blue_import_anycast-rack statement 20 action bgp local-preference set 120
+set / routing-policy policy blue_import_anycast-rack statement 30 match prefix prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy blue_import_anycast-rack statement 30 match bgp community-set C-64700-115
+set / routing-policy policy blue_import_anycast-rack statement 30 action policy-result accept
+set / routing-policy policy blue_import_anycast-rack statement 30 action bgp local-preference set 115
+set / routing-policy policy blue_import_anycast-rack statement 40 match prefix prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy blue_import_anycast-rack statement 40 match bgp community-set C-64700-110
+set / routing-policy policy blue_import_anycast-rack statement 40 action policy-result accept
+set / routing-policy policy blue_import_anycast-rack statement 40 action bgp local-preference set 110
+set / routing-policy policy blue_import_anycast-rack statement 50 match prefix prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy blue_import_anycast-rack statement 50 match bgp community-set C-64800-90
+set / routing-policy policy blue_import_anycast-rack statement 50 action policy-result accept
+set / routing-policy policy blue_import_anycast-rack statement 50 action bgp local-preference set 90
+set / routing-policy policy blue_import_anycast-rack statement 60 match prefix prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy blue_import_anycast-rack statement 60 match bgp community-set C-65400-125
+set / routing-policy policy blue_import_anycast-rack statement 60 action policy-result accept
+set / routing-policy policy blue_import_anycast-rack statement 60 action bgp local-preference set 125
+set / routing-policy policy blue_import_anycast-rack statement 70 match prefix prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy blue_import_anycast-rack statement 70 match bgp community-set C-65535-0
+set / routing-policy policy blue_import_anycast-rack statement 70 action policy-result accept
+set / routing-policy policy blue_import_anycast-rack statement 70 action bgp local-preference set 0
+set / routing-policy policy blue_import_anycast-rack statement 80 match prefix prefix-set PL-10.255.0.0_24-UPTO32
+set / routing-policy policy blue_import_anycast-rack statement 80 action policy-result accept
+set / routing-policy policy blue_import_slb default-action policy-result reject
+set / routing-policy policy blue_import_slb statement 10 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy blue_import_slb statement 10 match bgp community-set C-64700-125
+set / routing-policy policy blue_import_slb statement 10 action policy-result accept
+set / routing-policy policy blue_import_slb statement 10 action bgp local-preference set 125
+set / routing-policy policy blue_import_slb statement 20 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy blue_import_slb statement 20 match bgp community-set C-64700-120
+set / routing-policy policy blue_import_slb statement 20 action policy-result accept
+set / routing-policy policy blue_import_slb statement 20 action bgp local-preference set 120
+set / routing-policy policy blue_import_slb statement 30 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy blue_import_slb statement 30 match bgp community-set C-64700-115
+set / routing-policy policy blue_import_slb statement 30 action policy-result accept
+set / routing-policy policy blue_import_slb statement 30 action bgp local-preference set 115
+set / routing-policy policy blue_import_slb statement 40 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy blue_import_slb statement 40 match bgp community-set C-64700-110
+set / routing-policy policy blue_import_slb statement 40 action policy-result accept
+set / routing-policy policy blue_import_slb statement 40 action bgp local-preference set 110
+set / routing-policy policy blue_import_slb statement 50 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy blue_import_slb statement 50 match bgp community-set C-64800-90
+set / routing-policy policy blue_import_slb statement 50 action policy-result accept
+set / routing-policy policy blue_import_slb statement 50 action bgp local-preference set 90
+set / routing-policy policy blue_import_slb statement 60 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy blue_import_slb statement 60 match bgp community-set C-65400-125
+set / routing-policy policy blue_import_slb statement 60 action policy-result accept
+set / routing-policy policy blue_import_slb statement 60 action bgp local-preference set 125
+set / routing-policy policy blue_import_slb statement 70 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy blue_import_slb statement 70 match bgp community-set C-65535-0
+set / routing-policy policy blue_import_slb statement 70 action policy-result accept
+set / routing-policy policy blue_import_slb statement 70 action bgp local-preference set 0
+set / routing-policy policy blue_import_slb statement 80 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy blue_import_slb statement 80 action policy-result accept
+set / routing-policy policy blue_import_slb statement 90 match prefix prefix-set PL-10.255.0.0_24-UPTO32
+set / routing-policy policy blue_import_slb statement 90 action policy-result accept
+set / routing-policy policy blue_import_spine default-action policy-result reject
+set / routing-policy policy blue_import_spine statement 10 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy blue_import_spine statement 10 match bgp community-set C-64700-125
+set / routing-policy policy blue_import_spine statement 10 action policy-result accept
+set / routing-policy policy blue_import_spine statement 10 action bgp local-preference set 125
+set / routing-policy policy blue_import_spine statement 20 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy blue_import_spine statement 20 match bgp community-set C-64700-120
+set / routing-policy policy blue_import_spine statement 20 action policy-result accept
+set / routing-policy policy blue_import_spine statement 20 action bgp local-preference set 120
+set / routing-policy policy blue_import_spine statement 30 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy blue_import_spine statement 30 match bgp community-set C-64700-115
+set / routing-policy policy blue_import_spine statement 30 action policy-result accept
+set / routing-policy policy blue_import_spine statement 30 action bgp local-preference set 115
+set / routing-policy policy blue_import_spine statement 40 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy blue_import_spine statement 40 match bgp community-set C-64700-110
+set / routing-policy policy blue_import_spine statement 40 action policy-result accept
+set / routing-policy policy blue_import_spine statement 40 action bgp local-preference set 110
+set / routing-policy policy blue_import_spine statement 50 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy blue_import_spine statement 50 match bgp community-set C-64800-90
+set / routing-policy policy blue_import_spine statement 50 action policy-result accept
+set / routing-policy policy blue_import_spine statement 50 action bgp local-preference set 90
+set / routing-policy policy blue_import_spine statement 60 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy blue_import_spine statement 60 match bgp community-set C-65400-125
+set / routing-policy policy blue_import_spine statement 60 action policy-result accept
+set / routing-policy policy blue_import_spine statement 60 action bgp local-preference set 125
+set / routing-policy policy blue_import_spine statement 70 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy blue_import_spine statement 70 match bgp community-set C-65535-0
+set / routing-policy policy blue_import_spine statement 70 action policy-result accept
+set / routing-policy policy blue_import_spine statement 70 action bgp local-preference set 0
+set / routing-policy policy blue_import_spine statement 80 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy blue_import_spine statement 80 action policy-result accept
+set / routing-policy policy red_export_cilium default-action policy-result reject
+set / routing-policy policy red_export_cilium statement 10 match protocol bgp
+set / routing-policy policy red_export_cilium statement 10 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy red_export_cilium statement 10 action policy-result accept
+set / routing-policy policy red_export_slb default-action policy-result reject
+set / routing-policy policy red_export_slb statement 10 match protocol bgp
+set / routing-policy policy red_export_slb statement 10 match prefix prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy red_export_slb statement 10 action policy-result accept
+set / routing-policy policy red_export_spine default-action policy-result reject
+set / routing-policy policy red_export_spine statement 10 match protocol bgp
+set / routing-policy policy red_export_spine statement 10 match prefix prefix-set PL-RED-EXP-SPINE-BGP-REJ1
+set / routing-policy policy red_export_spine statement 10 action policy-result reject
+set / routing-policy policy red_export_spine statement 20 match protocol bgp
+set / routing-policy policy red_export_spine statement 20 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy red_export_spine statement 20 action policy-result accept
+set / routing-policy policy red_export_spine statement 30 match protocol local
+set / routing-policy policy red_export_spine statement 30 match prefix prefix-set PL-RED-EXP-SPINE-DIR-REJ1
+set / routing-policy policy red_export_spine statement 30 action policy-result reject
+set / routing-policy policy red_export_spine statement 40 match protocol local
+set / routing-policy policy red_export_spine statement 40 match prefix prefix-set PL-RED-EXP-SPINE-DIR-ACC1
+set / routing-policy policy red_export_spine statement 40 action policy-result accept
+set / routing-policy policy red_export_spine statement 50 match protocol local
+set / routing-policy policy red_export_spine statement 50 match prefix prefix-set PL-RED-EXP-SPINE-DIR-ACC2
+set / routing-policy policy red_export_spine statement 50 action policy-result accept
+set / routing-policy policy red_import_cilium default-action policy-result reject
+set / routing-policy policy red_import_cilium statement 10 match prefix prefix-set PL-RED-IMP-CILIUM-ACC1
+set / routing-policy policy red_import_cilium statement 10 match bgp community-set C-64700-125
+set / routing-policy policy red_import_cilium statement 10 action policy-result accept
+set / routing-policy policy red_import_cilium statement 10 action bgp local-preference set 125
+set / routing-policy policy red_import_cilium statement 20 match prefix prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy red_import_cilium statement 20 match bgp community-set C-64700-120
+set / routing-policy policy red_import_cilium statement 20 action policy-result accept
+set / routing-policy policy red_import_cilium statement 20 action bgp local-preference set 120
+set / routing-policy policy red_import_cilium statement 30 match prefix prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy red_import_cilium statement 30 match bgp community-set C-64700-115
+set / routing-policy policy red_import_cilium statement 30 action policy-result accept
+set / routing-policy policy red_import_cilium statement 30 action bgp local-preference set 115
+set / routing-policy policy red_import_cilium statement 40 match prefix prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy red_import_cilium statement 40 match bgp community-set C-64700-110
+set / routing-policy policy red_import_cilium statement 40 action policy-result accept
+set / routing-policy policy red_import_cilium statement 40 action bgp local-preference set 110
+set / routing-policy policy red_import_cilium statement 50 match prefix prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy red_import_cilium statement 50 match bgp community-set C-64800-90
+set / routing-policy policy red_import_cilium statement 50 action policy-result accept
+set / routing-policy policy red_import_cilium statement 50 action bgp local-preference set 90
+set / routing-policy policy red_import_cilium statement 60 match prefix prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy red_import_cilium statement 60 match bgp community-set C-65400-125
+set / routing-policy policy red_import_cilium statement 60 action policy-result accept
+set / routing-policy policy red_import_cilium statement 60 action bgp local-preference set 125
+set / routing-policy policy red_import_cilium statement 70 match prefix prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy red_import_cilium statement 70 match bgp community-set C-65535-0
+set / routing-policy policy red_import_cilium statement 70 action policy-result accept
+set / routing-policy policy red_import_cilium statement 70 action bgp local-preference set 0
+set / routing-policy policy red_import_cilium statement 80 match prefix prefix-set PL-RED-IMP-CILIUM-ACC1
+set / routing-policy policy red_import_cilium statement 80 action policy-result accept
+set / routing-policy policy red_import_slb default-action policy-result reject
+set / routing-policy policy red_import_slb statement 10 match prefix prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy red_import_slb statement 10 match bgp community-set C-64700-125
+set / routing-policy policy red_import_slb statement 10 action policy-result accept
+set / routing-policy policy red_import_slb statement 10 action bgp local-preference set 125
+set / routing-policy policy red_import_slb statement 20 match prefix prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy red_import_slb statement 20 match bgp community-set C-64700-120
+set / routing-policy policy red_import_slb statement 20 action policy-result accept
+set / routing-policy policy red_import_slb statement 20 action bgp local-preference set 120
+set / routing-policy policy red_import_slb statement 30 match prefix prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy red_import_slb statement 30 match bgp community-set C-64700-115
+set / routing-policy policy red_import_slb statement 30 action policy-result accept
+set / routing-policy policy red_import_slb statement 30 action bgp local-preference set 115
+set / routing-policy policy red_import_slb statement 40 match prefix prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy red_import_slb statement 40 match bgp community-set C-64700-110
+set / routing-policy policy red_import_slb statement 40 action policy-result accept
+set / routing-policy policy red_import_slb statement 40 action bgp local-preference set 110
+set / routing-policy policy red_import_slb statement 50 match prefix prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy red_import_slb statement 50 match bgp community-set C-64800-90
+set / routing-policy policy red_import_slb statement 50 action policy-result accept
+set / routing-policy policy red_import_slb statement 50 action bgp local-preference set 90
+set / routing-policy policy red_import_slb statement 60 match prefix prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy red_import_slb statement 60 match bgp community-set C-65400-125
+set / routing-policy policy red_import_slb statement 60 action policy-result accept
+set / routing-policy policy red_import_slb statement 60 action bgp local-preference set 125
+set / routing-policy policy red_import_slb statement 70 match prefix prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy red_import_slb statement 70 match bgp community-set C-65535-0
+set / routing-policy policy red_import_slb statement 70 action policy-result accept
+set / routing-policy policy red_import_slb statement 70 action bgp local-preference set 0
+set / routing-policy policy red_import_slb statement 80 match prefix prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy red_import_slb statement 80 action policy-result accept
+set / routing-policy policy red_import_spine default-action policy-result reject
+set / routing-policy policy red_import_spine statement 10 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy red_import_spine statement 10 match bgp community-set C-64700-125
+set / routing-policy policy red_import_spine statement 10 action policy-result accept
+set / routing-policy policy red_import_spine statement 10 action bgp local-preference set 125
+set / routing-policy policy red_import_spine statement 20 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy red_import_spine statement 20 match bgp community-set C-64700-120
+set / routing-policy policy red_import_spine statement 20 action policy-result accept
+set / routing-policy policy red_import_spine statement 20 action bgp local-preference set 120
+set / routing-policy policy red_import_spine statement 30 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy red_import_spine statement 30 match bgp community-set C-64700-115
+set / routing-policy policy red_import_spine statement 30 action policy-result accept
+set / routing-policy policy red_import_spine statement 30 action bgp local-preference set 115
+set / routing-policy policy red_import_spine statement 40 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy red_import_spine statement 40 match bgp community-set C-64700-110
+set / routing-policy policy red_import_spine statement 40 action policy-result accept
+set / routing-policy policy red_import_spine statement 40 action bgp local-preference set 110
+set / routing-policy policy red_import_spine statement 50 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy red_import_spine statement 50 match bgp community-set C-64800-90
+set / routing-policy policy red_import_spine statement 50 action policy-result accept
+set / routing-policy policy red_import_spine statement 50 action bgp local-preference set 90
+set / routing-policy policy red_import_spine statement 60 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy red_import_spine statement 60 match bgp community-set C-65400-125
+set / routing-policy policy red_import_spine statement 60 action policy-result accept
+set / routing-policy policy red_import_spine statement 60 action bgp local-preference set 125
+set / routing-policy policy red_import_spine statement 70 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy red_import_spine statement 70 match bgp community-set C-65535-0
+set / routing-policy policy red_import_spine statement 70 action policy-result accept
+set / routing-policy policy red_import_spine statement 70 action bgp local-preference set 0
+set / routing-policy policy red_import_spine statement 80 match prefix prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy red_import_spine statement 80 action policy-result accept
+
