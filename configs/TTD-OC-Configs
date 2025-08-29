@@ -1,0 +1,966 @@
+set / acl acl-sets acl-set cpm type ACL_IPV6 config name cpm
+set / acl acl-sets acl-set cpm type ACL_IPV6 config type ACL_IPV6
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 config sequence-id 10
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 config description "Accept incoming ICMPv6 unreachable messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 ipv6 icmpv6 config type DESTINATION_UNREACHABLE
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 10 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 20 config sequence-id 20
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 20 config description "Accept incoming ICMPv6 packet-too-big messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 20 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 20 ipv6 icmpv6 config type PACKET_TOO_BIG
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 20 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 30 config sequence-id 30
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 30 config description "Accept incoming ICMPv6 time-exceeded messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 30 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 30 ipv6 icmpv6 config type TIME_EXCEEDED
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 30 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 50 config sequence-id 50
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 50 config description "Accept incoming ICMPv6 echo-request messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 50 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 50 ipv6 icmpv6 config type ECHO_REQUEST
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 50 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 60 config sequence-id 60
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 60 config description "Accept incoming ICMPv6 echo-reply messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 60 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 60 ipv6 icmpv6 config type ECHO_REPLY
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 60 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 70 config sequence-id 70
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 70 config description "Accept incoming ICMPv6 router-advertisement messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 70 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 70 ipv6 icmpv6 config type ROUTER_ADVERTISEMENT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 70 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 80 config sequence-id 80
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 80 config description "Accept incoming ICMPv6 neighbor-solicitation messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 80 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 80 ipv6 icmpv6 config type NEIGHBOR_SOLICITATION
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 80 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 90 config sequence-id 90
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 90 config description "Accept incoming ICMPv6 neighbor-advertisement messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 90 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 90 ipv6 icmpv6 config type NEIGHBOR_ADVERTISEMENT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 90 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 100 config sequence-id 100
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 100 config description "Accept incoming SSH when the other host initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 100 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 100 transport config destination-port 22
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 100 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 110 config sequence-id 110
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 110 config description "Accept incoming SSH when this router initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 110 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 110 transport config source-port 22
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 110 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 128 config sequence-id 128
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 128 config description "Containerlab-added rule: Accept incoming Telnet when the other host initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 128 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 128 transport config source-port 23
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 128 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 138 config sequence-id 138
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 138 config description "Containerlab-added rule: Accept incoming Telnet when this router initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 138 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 138 transport config destination-port 23
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 138 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 140 config sequence-id 140
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 140 config description "Accept incoming TACACS+ when the other host initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 140 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 140 transport config destination-port 49
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 140 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 150 config sequence-id 150
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 150 config description "Accept incoming TACACS+ when this router initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 150 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 150 transport config source-port 49
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 150 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 160 config sequence-id 160
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 160 config description "Accept incoming DNS response messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 160 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 160 transport config source-port 53
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 160 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 188 config sequence-id 188
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 188 config description "Containerlab-added rule: Accept incoming HTTP(JSON-RPC) when the other host initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 188 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 188 transport config destination-port 80
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 188 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 190 config sequence-id 190
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 190 config description "Accept incoming HTTP(JSON-RPC) when this router initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 190 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 190 transport config source-port 80
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 190 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 200 config sequence-id 200
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 200 config description "Accept incoming NTP messages from servers"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 200 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 200 transport config source-port 123
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 200 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 210 config sequence-id 210
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 210 config description "Accept incoming SNMP GET/GETNEXT messages from servers"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 210 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 210 transport config destination-port 161
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 210 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 220 config sequence-id 220
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 220 config description "Accept incoming BGP when the other router initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 220 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 220 transport config destination-port 179
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 220 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 230 config sequence-id 230
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 230 config description "Accept incoming BGP when this router initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 230 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 230 transport config source-port 179
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 230 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 240 config sequence-id 240
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 240 config description "Accept incoming HTTPS(JSON-RPC) when the other host initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 240 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 240 transport config destination-port 443
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 240 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 250 config sequence-id 250
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 250 config description "Accept incoming HTTPS(JSON-RPC) when this router initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 250 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 250 transport config source-port 443
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 250 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 260 config sequence-id 260
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 260 config description "Accept incoming DHCPv6 client messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 260 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 260 transport config destination-port 546
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 260 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 270 config sequence-id 270
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 270 config description "Accept incoming single-hop BFD session messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 270 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 270 transport config destination-port 3784
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 270 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 280 config sequence-id 280
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 280 config description "Accept incoming multi-hop BFD session messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 280 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 280 transport config destination-port 4784
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 280 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 290 config sequence-id 290
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 290 config description "Accept incoming uBFD session messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 290 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 290 transport config destination-port 6784
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 290 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 300 config sequence-id 300
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 300 config description "Accept incoming gRPC messages when the other host initiates the TCP connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 300 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 300 transport config destination-port 57400
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 300 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 310 config sequence-id 310
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 310 config description "Accept incoming UDP traceroute messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 310 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 310 transport config destination-port 33434..33464
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 310 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 320 config sequence-id 320
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 320 config description "Accept incoming IPV6 hop-in-hop messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 320 ipv6 config protocol 0
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 320 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 340 config sequence-id 340
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 340 config description "Accept incoming OSPF messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 340 ipv6 config protocol 89
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 340 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 350 config sequence-id 350
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 350 config description "Accept incoming DHCPv6 relay messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 350 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 350 transport config destination-port 547
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 350 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 365 config sequence-id 365
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 365 config description "Containerlab-added rule: Accept incoming gRPC over port 50052 for the eda-discovery gRPC server"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 365 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 365 transport config destination-port 50052
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 365 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 366 config sequence-id 366
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 366 config description "Containerlab-added rule: Accept incoming gRPC over port 57410 for the eda-mgmt gRPC server"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 366 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 366 transport config destination-port 57410
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 366 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 367 config sequence-id 367
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 367 config description "Containerlab-added rule: Accept incoming gRPC over port 57411 for the eda-mgmt gRPC server"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 367 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 367 transport config destination-port 57411
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 367 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 368 config sequence-id 368
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 368 config description "Containerlab-added rule: Accept incoming gRPC over port 57401 for the insecure-mgmt gRPC server"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 368 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 368 transport config destination-port 57401
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 368 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 380 config sequence-id 380
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 380 config description "Accept incoming MLDv1 report messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 380 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 380 ipv6 icmpv6 config type MULTICAST_LISTENER_REPORT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 380 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 390 config sequence-id 390
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 390 config description "Accept incoming MLDv2 report messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 390 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 390 ipv6 icmpv6 config type VERSION2_MULTICAST_LISTENER
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 390 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 400 config sequence-id 400
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 400 config description "Accept incoming MLDv1 done messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 400 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 400 ipv6 icmpv6 config type MULTICAST_LISTENER_DONE
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 400 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 410 config sequence-id 410
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 410 config description "Accept incoming MLD query messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 410 ipv6 config protocol 58
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 410 ipv6 icmpv6 config type MULTICAST_LISTENER_QUERY
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 410 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 420 config sequence-id 420
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 420 config description "Accept incoming PIM messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 420 ipv6 config protocol IP_PIM
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 420 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 430 config sequence-id 430
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 430 config description "Accept incoming RADIUS AAA messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 430 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 430 transport config source-port 1812..1813
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 430 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 440 config sequence-id 440
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 440 config description "Accept incoming SSH connections on the default NETCONF port 830"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 440 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 440 transport config destination-port 830
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 440 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 450 config sequence-id 450
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 450 config description "Accept incoming PTP messages with destination-ports 319 and 320"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 450 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 450 transport config destination-port 319..320
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 450 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 460 config sequence-id 460
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 460 config description "Accept incoming PCEP packets with destination-port 4189"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 460 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 460 transport config destination-port 4189
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 460 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 470 config sequence-id 470
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 470 config description "Accept incoming SBFD session messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 470 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 470 transport config source-port 7784
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 470 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 480 config sequence-id 480
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 480 config description "Accept incoming SBFD session messages"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 480 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 480 transport config destination-port 7784
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 480 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 490 config sequence-id 490
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 490 config description "Accept incoming LDP packets"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 490 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 490 transport config source-port 646
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 490 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 500 config sequence-id 500
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 500 config description "Accept incoming LDP packets with source-port 646"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 500 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 500 transport config source-port 646
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 500 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 510 config sequence-id 510
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 510 config description "Accept incoming LDP packets with destination-port 646"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 510 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 510 transport config destination-port 646
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 510 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 520 config sequence-id 520
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 520 config description "Accept incoming TWAMP Control connection"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 520 ipv6 config protocol IP_TCP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 520 transport config destination-port 862
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 520 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 530 config sequence-id 530
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 530 config description "Accept incoming LSP MPLS Echo requests and replies"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 530 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 530 transport config destination-port 3503
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 530 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 540 config sequence-id 540
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 540 config description "Accept incoming LSP MPLS Echo requests and replies"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 540 ipv6 config protocol IP_UDP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 540 transport config source-port 3503
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 540 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 550 config sequence-id 550
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 550 config description "Accept incoming VRRP Control packets"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 550 ipv6 config protocol 112
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 550 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 1000 config sequence-id 1000
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 1000 config description "Drop all else"
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 1000 actions config forwarding-action DROP
+set / acl acl-sets acl-set cpm type ACL_IPV6 acl-entries acl-entry 1000 actions config log-action LOG_SYSLOG
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 config name lo_filter
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 config type ACL_IPV4
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 10 config sequence-id 10
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 10 config description "BGP_NEIGHBORS from bgp_neighbors"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 10 ipv4 config protocol IP_TCP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 10 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 11 config sequence-id 11
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 11 config description "BGP_NEIGHBORS from bgp_neighbors_route_instance"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 11 ipv4 config protocol IP_TCP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 11 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 20 config sequence-id 20
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 20 config description "SSH from ssh_sources"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 20 ipv4 config protocol IP_TCP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 20 transport config destination-port 22
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 20 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 30 config sequence-id 30
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 30 config description "NETCONF/SSH from ssh_sources"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 30 ipv4 config protocol IP_TCP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 30 transport config destination-port 830
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 30 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 40 config sequence-id 40
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 40 config description "VXLAN UDP/4789"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 40 ipv4 config protocol IP_UDP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 40 transport config destination-port 4789
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 40 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 50 config sequence-id 50
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 50 config description "MHBFD UDP/4784"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 50 ipv4 config protocol IP_UDP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 50 transport config destination-port 4784
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 50 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 60 config sequence-id 60
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 60 config description "NTP from ntp_servers"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 60 ipv4 config protocol IP_UDP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 60 transport config source-port 123
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 60 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 61 config sequence-id 61
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 61 config description "NTP from lo0_v4"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 61 ipv4 config protocol IP_UDP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 61 transport config source-port 123
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 61 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 70 config sequence-id 70
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 70 config description "Drop fragmented ICMP"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 70 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 70 actions config forwarding-action DROP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 80 config sequence-id 80
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 80 config description "ICMP echo-reply"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 80 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 80 ipv4 icmpv4 config type ECHO_REPLY
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 80 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 81 config sequence-id 81
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 81 config description "ICMP echo-request"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 81 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 81 ipv4 icmpv4 config type ECHO
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 81 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 82 config sequence-id 82
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 82 config description "ICMP time-exceeded"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 82 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 82 ipv4 icmpv4 config type TIME_EXCEEDED
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 82 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 83 config sequence-id 83
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 83 config description "ICMP dest-unreachable"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 83 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 83 ipv4 icmpv4 config type DST_UNREACHABLE
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 83 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 84 config sequence-id 84
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 84 config description "ICMP source-quench"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 84 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 84 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 85 config sequence-id 85
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 85 config description "ICMP router-advertisement"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 85 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 85 ipv4 icmpv4 config type ROUTER_ADVERTISEMENT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 85 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 86 config sequence-id 86
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 86 config description "ICMP parameter-problem"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 86 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 86 ipv4 icmpv4 config type PARAM_PROBLEM
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 86 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 90 config sequence-id 90
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 90 config description "Traceroute UDP dports 33435-33450"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 90 ipv4 config protocol IP_UDP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 90 transport config destination-port 33435..33450
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 90 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 91 config sequence-id 91
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 91 config description "Traceroute ICMP time-exceeded"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 91 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 91 ipv4 icmpv4 config type TIME_EXCEEDED
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 91 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 92 config sequence-id 92
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 92 config description "Traceroute ICMP echo-request"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 92 ipv4 config protocol IP_ICMP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 92 ipv4 icmpv4 config type ECHO
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 92 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 100 config sequence-id 100
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 100 config description "DNS from name_servers"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 100 ipv4 config protocol IP_UDP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 100 transport config source-port 53
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 100 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 110 config sequence-id 110
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 110 config description "DHCP client discover/request"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 110 ipv4 config source-address 0.0.0.0/32
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 110 ipv4 config destination-address 255.255.255.255/32
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 110 ipv4 config protocol IP_UDP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 110 transport config source-port 68
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 110 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 120 config sequence-id 120
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 120 config description "DHCP server traffic (67/68)"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 120 ipv4 config protocol IP_UDP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 120 transport config source-port 67..68
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 120 transport config destination-port 67..68
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 120 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 130 config sequence-id 130
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 130 config description "TCP established (ACK) to local_v4"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 130 ipv4 config protocol IP_TCP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 130 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 131 config sequence-id 131
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 131 config description "TCP established (RST) to local_v4"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 131 ipv4 config protocol IP_TCP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 131 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 150 config sequence-id 150
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 150 config description "gRPC TCP/50051"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 150 ipv4 config protocol IP_TCP
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 150 transport config destination-port 50051
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 150 actions config forwarding-action ACCEPT
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 65535 config sequence-id 65535
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 65535 config description "Default deny"
+set / acl acl-sets acl-set lo_filter type ACL_IPV4 acl-entries acl-entry 65535 actions config forwarding-action DROP
+set / interfaces interface ethernet-1/1 config name ethernet-1/1
+set / interfaces interface ethernet-1/1 config type ethernetCsmacd
+set / interfaces interface ethernet-1/1 config mtu 9216
+set / interfaces interface ethernet-1/1 config description To-spine
+set / interfaces interface ethernet-1/1 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 config index 1
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 ipv4 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 ipv6 router-advertisement config enable true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 ipv6 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 1 vlan match single-tagged config vlan-id 1
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 config index 2
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 ipv4 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 ipv6 router-advertisement config enable true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 ipv6 config enabled true
+set / interfaces interface ethernet-1/1 subinterfaces subinterface 2 vlan match single-tagged config vlan-id 2
+set / interfaces interface ethernet-1/2 config name ethernet-1/2
+set / interfaces interface ethernet-1/2 config type ethernetCsmacd
+set / interfaces interface ethernet-1/2 subinterfaces subinterface 1 config index 1
+set / interfaces interface ethernet-1/2 subinterfaces subinterface 1 config enabled true
+set / interfaces interface ethernet-1/2 subinterfaces subinterface 1 ipv6 config enabled true
+set / interfaces interface ethernet-1/2 subinterfaces subinterface 1 vlan match single-tagged config vlan-id 1
+set / interfaces interface ethernet-1/2 subinterfaces subinterface 2 config index 2
+set / interfaces interface ethernet-1/2 subinterfaces subinterface 2 config enabled true
+set / interfaces interface ethernet-1/2 subinterfaces subinterface 2 ipv6 config enabled true
+set / interfaces interface ethernet-1/2 subinterfaces subinterface 2 vlan match single-tagged config vlan-id 2
+set / interfaces interface ethernet-1/3 config name ethernet-1/3
+set / interfaces interface ethernet-1/3 config type ethernetCsmacd
+set / interfaces interface ethernet-1/3 subinterfaces subinterface 1 config index 1
+set / interfaces interface ethernet-1/3 subinterfaces subinterface 1 config enabled true
+set / interfaces interface ethernet-1/3 subinterfaces subinterface 1 ipv6 config enabled true
+set / interfaces interface ethernet-1/3 subinterfaces subinterface 1 vlan match single-tagged config vlan-id 1
+set / interfaces interface ethernet-1/3 subinterfaces subinterface 2 config index 2
+set / interfaces interface ethernet-1/3 subinterfaces subinterface 2 config enabled true
+set / interfaces interface ethernet-1/3 subinterfaces subinterface 2 ipv6 config enabled true
+set / interfaces interface ethernet-1/3 subinterfaces subinterface 2 vlan match single-tagged config vlan-id 2
+set / interfaces interface ethernet-1/4 config name ethernet-1/4
+set / interfaces interface ethernet-1/4 config type ethernetCsmacd
+set / interfaces interface ethernet-1/4 subinterfaces subinterface 1 config index 1
+set / interfaces interface ethernet-1/4 subinterfaces subinterface 1 config enabled true
+set / interfaces interface ethernet-1/4 subinterfaces subinterface 1 ipv6 config enabled true
+set / interfaces interface ethernet-1/4 subinterfaces subinterface 1 vlan match single-tagged config vlan-id 1
+set / interfaces interface ethernet-1/4 subinterfaces subinterface 2 config index 2
+set / interfaces interface ethernet-1/4 subinterfaces subinterface 2 config enabled true
+set / interfaces interface ethernet-1/4 subinterfaces subinterface 2 ipv6 config enabled true
+set / interfaces interface ethernet-1/4 subinterfaces subinterface 2 vlan match single-tagged config vlan-id 2
+set / interfaces interface ethernet-1/10 config name ethernet-1/10
+set / interfaces interface ethernet-1/10 config type ethernetCsmacd
+set / interfaces interface ethernet-1/10 config enabled true
+set / interfaces interface ethernet-1/10/1 config name ethernet-1/10/1
+set / interfaces interface ethernet-1/10/1 config type ethernetCsmacd
+set / interfaces interface ethernet-1/10/1 config enabled true
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 1 config index 1
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 1 vlan match single-tagged config vlan-id 1
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 2 config index 2
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 2 vlan match single-tagged config vlan-id 2
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 162 config index 162
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 162 config enabled true
+set / interfaces interface ethernet-1/10/1 subinterfaces subinterface 162 vlan match single-tagged config vlan-id 162
+set / interfaces interface irb0 config name irb0
+set / interfaces interface irb0 config type ipForward
+set / interfaces interface irb0 config enabled true
+set / interfaces interface irb0 subinterfaces subinterface 1 config index 1
+set / interfaces interface irb0 subinterfaces subinterface 1 config enabled true
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 addresses address 10.148.33.1 config ip 10.148.33.1
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 addresses address 10.148.33.1 config prefix-length 25
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 addresses address 10.148.252.1 config ip 10.148.252.1
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 addresses address 10.148.252.1 config prefix-length 23
+set / interfaces interface irb0 subinterfaces subinterface 1 ipv4 config enabled true
+set / interfaces interface irb0 subinterfaces subinterface 2 config index 2
+set / interfaces interface irb0 subinterfaces subinterface 2 config enabled true
+set / interfaces interface irb0 subinterfaces subinterface 2 ipv4 addresses address 10.148.33.129 config ip 10.148.33.129
+set / interfaces interface irb0 subinterfaces subinterface 2 ipv4 addresses address 10.148.33.129 config prefix-length 25
+set / interfaces interface irb0 subinterfaces subinterface 2 ipv4 config enabled true
+set / interfaces interface irb0 subinterfaces subinterface 162 config index 162
+set / interfaces interface irb0 subinterfaces subinterface 162 config enabled true
+set / interfaces interface irb0 subinterfaces subinterface 162 ipv4 addresses address 10.148.145.1 config ip 10.148.145.1
+set / interfaces interface irb0 subinterfaces subinterface 162 ipv4 addresses address 10.148.145.1 config prefix-length 24
+set / interfaces interface irb0 subinterfaces subinterface 162 ipv4 config enabled true
+set / interfaces interface lo1 config name lo1
+set / interfaces interface lo1 config type softwareLoopback
+set / interfaces interface lo1 config enabled true
+set / interfaces interface lo1 subinterfaces subinterface 0 config index 0
+set / interfaces interface lo1 subinterfaces subinterface 0 ipv4 addresses address 10.148.32.150 config ip 10.148.32.150
+set / interfaces interface lo1 subinterfaces subinterface 0 ipv4 addresses address 10.148.32.150 config prefix-length 32
+set / interfaces interface lo1 subinterfaces subinterface 0 ipv4 config enabled true
+set / interfaces interface mgmt0 config name mgmt0
+set / interfaces interface mgmt0 config type ethernetCsmacd
+set / interfaces interface mgmt0 config mtu 9216
+set / interfaces interface mgmt0 config enabled true
+set / interfaces interface mgmt0 subinterfaces subinterface 0 config index 0
+set / interfaces interface mgmt0 subinterfaces subinterface 0 config enabled true
+set / interfaces interface mgmt0 subinterfaces subinterface 0 ipv4 addresses address 10.148.18.44 config ip 10.148.18.44
+set / interfaces interface mgmt0 subinterfaces subinterface 0 ipv4 addresses address 10.148.18.44 config prefix-length 24
+set / interfaces interface mgmt0 subinterfaces subinterface 0 ipv4 config enabled true
+set / interfaces interface mgmt0 subinterfaces subinterface 0 ipv6 config enabled true
+set / interfaces interface system0 config name system0
+set / interfaces interface system0 config type softwareLoopback
+set / interfaces interface system0 subinterfaces subinterface 0 config index 0
+set / interfaces interface system0 subinterfaces subinterface 0 config enabled true
+set / interfaces interface system0 subinterfaces subinterface 0 ipv4 addresses address 10.148.32.12 config ip 10.148.32.12
+set / interfaces interface system0 subinterfaces subinterface 0 ipv4 addresses address 10.148.32.12 config prefix-length 32
+set / interfaces interface system0 subinterfaces subinterface 0 ipv4 config enabled true
+set / lldp config enabled true
+set / network-instances network-instance blue config name blue
+set / network-instances network-instance blue config type L3VRF
+set / network-instances network-instance blue interfaces interface ethernet-1/1.2 config id ethernet-1/1.2
+set / network-instances network-instance blue interfaces interface ethernet-1/2.2 config id ethernet-1/2.2
+set / network-instances network-instance blue interfaces interface ethernet-1/3.2 config id ethernet-1/3.2
+set / network-instances network-instance blue interfaces interface ethernet-1/4.2 config id ethernet-1/4.2
+set / network-instances network-instance blue interfaces interface irb0.162 config id irb0.162
+set / network-instances network-instance blue interfaces interface irb0.2 config id irb0.2
+set / network-instances network-instance blue interfaces interface lo1.0 config id lo1.0
+set / network-instances network-instance blue interfaces interface vlan0.162 config id vlan0.162
+set / network-instances network-instance blue interfaces interface vlan0.2 config id vlan0.2
+set / network-instances network-instance blue protocols protocol BGP name BGP config identifier BGP
+set / network-instances network-instance blue protocols protocol BGP name BGP config name BGP
+set / network-instances network-instance blue protocols protocol BGP name BGP config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global config as 4200004113
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global config router-id 10.148.32.150
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global graceful-restart config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST use-multiple-paths ebgp config allow-multiple-as true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.33.128/25 config prefix 10.148.33.128/25
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.33.128/25 config peer-group slb
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.145.0/24 config prefix 10.148.145.0/24
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.145.0/24 config peer-group anycast-rack
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack config peer-group-name anycast-rack
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack config peer-as 4200004113
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ blue_import_anycast-rack ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group anycast-rack afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ blue_export_anycast-rack ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb config peer-group-name slb
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb config peer-as 4200004113
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ blue_import_slb ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ blue_export_slb ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine config peer-group-name spine
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ blue_import_spine ]
+set / network-instances network-instance blue protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ blue_export_spine ]
+set / network-instances network-instance mac-vrf-1 config name mac-vrf-1
+set / network-instances network-instance mac-vrf-1 config type L2VSI
+set / network-instances network-instance mac-vrf-1 interfaces interface ethernet-1/10/1.1 config id ethernet-1/10/1.1
+set / network-instances network-instance mac-vrf-1 interfaces interface irb0.1 config id irb0.1
+set / network-instances network-instance mac-vrf-162 config name mac-vrf-162
+set / network-instances network-instance mac-vrf-162 config type L2VSI
+set / network-instances network-instance mac-vrf-162 interfaces interface ethernet-1/10/1.162 config id ethernet-1/10/1.162
+set / network-instances network-instance mac-vrf-162 interfaces interface irb0.162 config id irb0.162
+set / network-instances network-instance mac-vrf-2 config name mac-vrf-2
+set / network-instances network-instance mac-vrf-2 config type L2VSI
+set / network-instances network-instance mac-vrf-2 interfaces interface ethernet-1/10/1.2 config id ethernet-1/10/1.2
+set / network-instances network-instance mac-vrf-2 interfaces interface irb0.2 config id irb0.2
+set / network-instances network-instance mgmt config name mgmt
+set / network-instances network-instance mgmt config type L3VRF
+set / network-instances network-instance mgmt config description "Management network instance"
+set / network-instances network-instance mgmt interfaces interface mgmt0.0 config id mgmt0.0
+set / network-instances network-instance mgmt protocols protocol STATIC name static config identifier STATIC
+set / network-instances network-instance mgmt protocols protocol STATIC name static config name static
+set / network-instances network-instance mgmt protocols protocol STATIC name static config enabled true
+set / network-instances network-instance mgmt protocols protocol STATIC name static static-routes
+set / network-instances network-instance red config name red
+set / network-instances network-instance red config type L3VRF
+set / network-instances network-instance red interfaces interface ethernet-1/1.1 config id ethernet-1/1.1
+set / network-instances network-instance red interfaces interface ethernet-1/2.1 config id ethernet-1/2.1
+set / network-instances network-instance red interfaces interface ethernet-1/3.1 config id ethernet-1/3.1
+set / network-instances network-instance red interfaces interface ethernet-1/4.1 config id ethernet-1/4.1
+set / network-instances network-instance red interfaces interface irb0.1 config id irb0.1
+set / network-instances network-instance red interfaces interface vlan0.1 config id vlan0.1
+set / network-instances network-instance red protocols protocol BGP name BGP config identifier BGP
+set / network-instances network-instance red protocols protocol BGP name BGP config name BGP
+set / network-instances network-instance red protocols protocol BGP name BGP config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global config as 4200004369
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global config router-id 10.148.32.12
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global graceful-restart config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global afi-safis afi-safi IPV4_UNICAST use-multiple-paths ebgp config allow-multiple-as true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.33.0/25 config prefix 10.148.33.0/25
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.33.0/25 config peer-group slb
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.252.0/23 config prefix 10.148.252.0/23
+set / network-instances network-instance red protocols protocol BGP name BGP bgp global dynamic-neighbor-prefixes dynamic-neighbor-prefix 10.148.252.0/23 config peer-group cilium
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium config peer-group-name cilium
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium config peer-as 4200004369
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ red_import_cilium ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group cilium afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ red_export_cilium ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb config peer-group-name slb
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb config peer-as 4200004369
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ red_import_slb ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group slb afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ red_export_slb ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine config peer-group-name spine
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config afi-safi-name IPV4_UNICAST
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST config enabled true
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST apply-policy config import-policy [ red_import_spine ]
+set / network-instances network-instance red protocols protocol BGP name BGP bgp peer-groups peer-group spine afi-safis afi-safi IPV4_UNICAST apply-policy config export-policy [ red_export_spine ]
+set / components component Ethernet-1/10-Port config name Ethernet-1/10-Port
+set / components component Ethernet-1/10-Port port breakout-mode groups group 1 config index 1
+set / components component Ethernet-1/10-Port port breakout-mode groups group 1 config num-breakouts 4
+set / components component Ethernet-1/10-Port port breakout-mode groups group 1 config breakout-speed SPEED_100GB
+set / routing-policy defined-sets prefix-sets prefix-set PL-10.255.0.0_24-UPTO32 config name PL-10.255.0.0_24-UPTO32
+set / routing-policy defined-sets prefix-sets prefix-set PL-10.255.0.0_24-UPTO32 prefixes prefix 10.255.0.0/24 masklength-range 24..32 config ip-prefix 10.255.0.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-10.255.0.0_24-UPTO32 prefixes prefix 10.255.0.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SLB-DIR-ACC1 config name PL-BLUE-EXP-SLB-DIR-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SLB-DIR-ACC1 prefixes prefix 10.148.145.0/24 masklength-range exact config ip-prefix 10.148.145.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SLB-DIR-ACC1 prefixes prefix 10.148.145.0/24 masklength-range exact config masklength-range exact
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 config name PL-BLUE-EXP-SPINE-BGP-REJ2
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.33.0/24 masklength-range 24..32 config ip-prefix 10.148.33.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.33.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.36.0/22 masklength-range 22..32 config ip-prefix 10.148.36.0/22
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.36.0/22 masklength-range 22..32 config masklength-range 22..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.40.0/22 masklength-range 22..32 config ip-prefix 10.148.40.0/22
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.40.0/22 masklength-range 22..32 config masklength-range 22..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.47.0/24 masklength-range 24..32 config ip-prefix 10.148.47.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2 prefixes prefix 10.148.47.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1 config name PL-BLUE-EXP-SPINE-DIR-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1 prefixes prefix 10.148.128.0/17 masklength-range 17..32 config ip-prefix 10.148.128.0/17
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1 prefixes prefix 10.148.128.0/17 masklength-range 17..32 config masklength-range 17..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2 config name PL-BLUE-EXP-SPINE-DIR-ACC2
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2 prefixes prefix 10.148.32.150/32 masklength-range exact config ip-prefix 10.148.32.150/32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2 prefixes prefix 10.148.32.150/32 masklength-range exact config masklength-range exact
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 config name PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.148.252.0/23 masklength-range 23..32 config ip-prefix 10.148.252.0/23
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.148.252.0/23 masklength-range 23..32 config masklength-range 23..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.148.254.0/23 masklength-range 23..32 config ip-prefix 10.148.254.0/23
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.148.254.0/23 masklength-range 23..32 config masklength-range 23..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.255.0.0/24 masklength-range 24..32 config ip-prefix 10.255.0.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 10.255.0.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 172.16.0.0/12 masklength-range 12..32 config ip-prefix 172.16.0.0/12
+set / routing-policy defined-sets prefix-sets prefix-set PL-BLUE-IMP-ANYCAST-ACC2 prefixes prefix 172.16.0.0/12 masklength-range 12..32 config masklength-range 12..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-EXACT config name PL-DEFAULT-EXACT
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-EXACT prefixes prefix 0.0.0.0/0 masklength-range exact config ip-prefix 0.0.0.0/0
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-EXACT prefixes prefix 0.0.0.0/0 masklength-range exact config masklength-range exact
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-UPTO32 config name PL-DEFAULT-UPTO32
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-UPTO32 prefixes prefix 0.0.0.0/0 masklength-range 0..32 config ip-prefix 0.0.0.0/0
+set / routing-policy defined-sets prefix-sets prefix-set PL-DEFAULT-UPTO32 prefixes prefix 0.0.0.0/0 masklength-range 0..32 config masklength-range 0..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 config name PL-RED-EXP-SPINE-BGP-REJ1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.33.0/24 masklength-range 24..32 config ip-prefix 10.148.33.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.33.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.36.0/22 masklength-range 22..32 config ip-prefix 10.148.36.0/22
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.36.0/22 masklength-range 22..32 config masklength-range 22..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.40.0/22 masklength-range 22..32 config ip-prefix 10.148.40.0/22
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.40.0/22 masklength-range 22..32 config masklength-range 22..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.47.0/24 masklength-range 24..32 config ip-prefix 10.148.47.0/24
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-BGP-REJ1 prefixes prefix 10.148.47.0/24 masklength-range 24..32 config masklength-range 24..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC1 config name PL-RED-EXP-SPINE-DIR-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC1 prefixes prefix 10.148.128.0/17 masklength-range 17..32 config ip-prefix 10.148.128.0/17
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC1 prefixes prefix 10.148.128.0/17 masklength-range 17..32 config masklength-range 17..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC2 config name PL-RED-EXP-SPINE-DIR-ACC2
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC2 prefixes prefix 10.148.32.12/32 masklength-range exact config ip-prefix 10.148.32.12/32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-ACC2 prefixes prefix 10.148.32.12/32 masklength-range exact config masklength-range exact
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-REJ1 config name PL-RED-EXP-SPINE-DIR-REJ1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-REJ1 prefixes prefix 10.148.252.0/23 masklength-range 23..32 config ip-prefix 10.148.252.0/23
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-EXP-SPINE-DIR-REJ1 prefixes prefix 10.148.252.0/23 masklength-range 23..32 config masklength-range 23..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC1 config name PL-RED-IMP-CILIUM-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC1 prefixes prefix 199.250.172.112/28 masklength-range 28..32 config ip-prefix 199.250.172.112/28
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC1 prefixes prefix 199.250.172.112/28 masklength-range 28..32 config masklength-range 28..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC2 config name PL-RED-IMP-CILIUM-ACC2
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC2 prefixes prefix 199.250.172.128/26 masklength-range 26..32 config ip-prefix 199.250.172.128/26
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-CILIUM-ACC2 prefixes prefix 199.250.172.128/26 masklength-range 26..32 config masklength-range 26..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 config name PL-RED-IMP-SLB-ACC1
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.64/27 masklength-range 27..32 config ip-prefix 199.250.172.64/27
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.64/27 masklength-range 27..32 config masklength-range 27..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.96/29 masklength-range 29..32 config ip-prefix 199.250.172.96/29
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.96/29 masklength-range 29..32 config masklength-range 29..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.128/26 masklength-range 26..32 config ip-prefix 199.250.172.128/26
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.128/26 masklength-range 26..32 config masklength-range 26..32
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.192/26 masklength-range 26..32 config ip-prefix 199.250.172.192/26
+set / routing-policy defined-sets prefix-sets prefix-set PL-RED-IMP-SLB-ACC1 prefixes prefix 199.250.172.192/26 masklength-range 26..32 config masklength-range 26..32
+set / routing-policy policy-definitions policy-definition DENY-ALL config name DENY-ALL
+set / routing-policy policy-definitions policy-definition blue_export_anycast-rack config name blue_export_anycast-rack
+set / routing-policy policy-definitions policy-definition blue_export_slb config name blue_export_slb
+set / routing-policy policy-definitions policy-definition blue_export_slb statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_export_slb statements statement 10 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition blue_export_slb statements statement 10 conditions match-prefix-set config prefix-set PL-BLUE-EXP-SLB-DIR-ACC1
+set / routing-policy policy-definitions policy-definition blue_export_slb statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine config name blue_export_spine
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 10 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 10 actions config policy-result REJECT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 20 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 20 conditions match-prefix-set config prefix-set PL-BLUE-EXP-SPINE-BGP-REJ2
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 20 actions config policy-result REJECT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 30 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 30 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 40 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 40 conditions match-prefix-set config prefix-set PL-BLUE-EXP-SPINE-DIR-ACC1
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 50 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 50 conditions match-prefix-set config prefix-set PL-BLUE-EXP-SPINE-DIR-ACC2
+set / routing-policy policy-definitions policy-definition blue_export_spine statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack config name blue_import_anycast-rack
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 10 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 20 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 30 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 40 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 50 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 60 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 70 conditions match-prefix-set config prefix-set PL-BLUE-IMP-ANYCAST-ACC2
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 80 conditions match-prefix-set config prefix-set PL-10.255.0.0_24-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_anycast-rack statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb config name blue_import_slb
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 20 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 30 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 40 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 50 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 60 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 70 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 80 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 90 config name 90
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 90 conditions match-prefix-set config prefix-set PL-10.255.0.0_24-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_slb statements statement 90 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine config name blue_import_spine
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 20 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 30 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 40 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 50 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 60 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 70 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 80 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition blue_import_spine statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_cilium config name red_export_cilium
+set / routing-policy policy-definitions policy-definition red_export_cilium statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_export_cilium statements statement 10 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition red_export_cilium statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition red_export_cilium statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_slb config name red_export_slb
+set / routing-policy policy-definitions policy-definition red_export_slb statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_export_slb statements statement 10 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition red_export_slb statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-EXACT
+set / routing-policy policy-definitions policy-definition red_export_slb statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine config name red_export_spine
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 10 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 10 conditions match-prefix-set config prefix-set PL-RED-EXP-SPINE-BGP-REJ1
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 10 actions config policy-result REJECT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 20 conditions config install-protocol-eq BGP
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 20 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 30 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 30 conditions match-prefix-set config prefix-set PL-RED-EXP-SPINE-DIR-REJ1
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 30 actions config policy-result REJECT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 40 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 40 conditions match-prefix-set config prefix-set PL-RED-EXP-SPINE-DIR-ACC1
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 50 conditions config install-protocol-eq DIRECTLY_CONNECTED
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 50 conditions match-prefix-set config prefix-set PL-RED-EXP-SPINE-DIR-ACC2
+set / routing-policy policy-definitions policy-definition red_export_spine statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium config name red_import_cilium
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 10 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC1
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 20 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 30 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 40 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 50 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 60 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 70 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC2
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 80 conditions match-prefix-set config prefix-set PL-RED-IMP-CILIUM-ACC1
+set / routing-policy policy-definitions policy-definition red_import_cilium statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb config name red_import_slb
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 10 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 20 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 30 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 40 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 50 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 60 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 70 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 80 conditions match-prefix-set config prefix-set PL-RED-IMP-SLB-ACC1
+set / routing-policy policy-definitions policy-definition red_import_slb statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine config name red_import_spine
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 10 config name 10
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 10 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 10 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 10 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 20 config name 20
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 20 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 20 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 20 actions bgp-actions config set-local-pref 120
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 30 config name 30
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 30 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 30 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 30 actions bgp-actions config set-local-pref 115
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 40 config name 40
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 40 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 40 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 40 actions bgp-actions config set-local-pref 110
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 50 config name 50
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 50 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 50 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 50 actions bgp-actions config set-local-pref 90
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 60 config name 60
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 60 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 60 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 60 actions bgp-actions config set-local-pref 125
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 70 config name 70
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 70 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 70 actions config policy-result ACCEPT_ROUTE
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 70 actions bgp-actions config set-local-pref 0
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 80 config name 80
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 80 conditions match-prefix-set config prefix-set PL-DEFAULT-UPTO32
+set / routing-policy policy-definitions policy-definition red_import_spine statements statement 80 actions config policy-result ACCEPT_ROUTE
+set / sampling sflow config enabled true
+set / sampling sflow collectors collector 10.148.131.44 port 6343 config address 10.148.131.44
+set / sampling sflow collectors collector 10.148.131.44 port 6343 config port 6343
+set / sampling sflow collectors collector 10.148.131.44 port 6343 config source-address 10.148.18.44
+set / sampling sflow collectors collector 10.148.131.44 port 6343 config network-instance mgmt
+set / sampling sflow interfaces interface ethernet-1/10/1 config name ethernet-1/10/1
+set / sampling sflow interfaces interface ethernet-1/10/1 config enabled true
+set / system config hostname vat-sw-abc21
+set / system aaa authentication config authentication-method [ local ]
+set / system aaa authentication users user tempnet config username tempnet
+set / system aaa authentication users user tempnet config role super-user-local
+set / system aaa server-groups server-group local config name local
+set / system ssh-server config enable true
+set / system ssh-server config rate-limit 5
+set / system clock config timezone-name Africa/Accra
+set / system dns servers server 10.255.255.254 config address 10.255.255.254
+set / system dns servers server 8.8.8.8 config address 8.8.8.8
+set / system dns servers server 8.8.4.4 config address 8.8.4.4
+set / system ntp config enabled true
+set / system ntp servers server 216.239.35.0 config address 216.239.35.0
+set / system ntp servers server 216.239.35.0 config network-instance mgmt
+set / system control-plane-traffic ingress acl acl-set cpm type ACL_IPV6 config set-name cpm
+set / system control-plane-traffic ingress acl acl-set cpm type ACL_IPV6 config type ACL_IPV6
+set / system control-plane-traffic ingress acl acl-set lo_filter type ACL_IPV4 config set-name lo_filter
+set / system control-plane-traffic ingress acl acl-set lo_filter type ACL_IPV4 config type ACL_IPV4
+set / system grpc-servers grpc-server insecure-mgmt config name insecure-mgmt
+set / system grpc-servers grpc-server insecure-mgmt config enable true
+set / system grpc-servers grpc-server insecure-mgmt config port 57401
+set / system grpc-servers grpc-server insecure-mgmt config network-instance mgmt
+set / system grpc-servers grpc-server insecure-mgmt config services [ GNMI GNSI GRIBI P4RT ]
+set / system grpc-servers grpc-server mgmt config name mgmt
+set / system grpc-servers grpc-server mgmt config enable true
+set / system grpc-servers grpc-server mgmt config port 50051
+set / system grpc-servers grpc-server mgmt config certificate-id clab-profile
+set / system grpc-servers grpc-server mgmt config network-instance mgmt
+set / system grpc-servers grpc-server mgmt config services [ GNMI GNSI GRIBI P4RT ]
